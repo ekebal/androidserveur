@@ -68,12 +68,12 @@ $app->get('/services', function() {
  * Will return 404 if the service doesn't belongs to user
  */
 $app->get('/services/:id', function($service_id) {
-    global $user_id;
+  //  global $user_id;
     $response = array();
     $db = new ServiceModel();
 
     // fetch service
-    $result = $db->getService($service_id, $user_id);
+    $result = $db->getService($service_id);
 
     if ($result != NULL) {
         $response["error"] = false;
