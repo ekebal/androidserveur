@@ -1,16 +1,24 @@
 <?php
 $app->post('/services', 'authenticate', function() use ($app) {
     // check for required params
-    verifyRequiredParams(array('service'));
+    verifyRequiredParams(array('titre'));
 
     $response = array();
-    $service = $app->request->post('service');
-
+    $titre = $app->request->post('titre');
+    $description = $app->request->post('description');
+    $price = $app->request->post('price');
+    $image = $app->request->post('image');
+    $adress = $app->request->post('adress');
+    $city = $app->request->post('city');
+    $latitude = $app->request->post('latitude');
+    $longituge = $app->request->post('longituge');
+    $id_category_service = $app->request->post('id_category_service');
     global $user_id;
+    
     $db = new ServiceModel();
 
     // creating new service
-    $service_id = $db->createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $publication_date, $active, $id_category_service, $uder_id);
+    $service_id = $db->createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
 
     if ($service_id != NULL) {
         $response["error"] = false;
@@ -28,22 +36,23 @@ $app->post('/services', 'authenticate', function() use ($app) {
  * url /services          
  */
 $app->get('/services', function() {
-    global $user_id;
+   // global $user_id;
     $response = array();
     $db = new ServiceModel();
 
     // fetching all user services
-    $result = $db->getAllUserservices($user_id);
-
+    $result = $db->getAllUserservices();
+       // print_r($result->error);
     $response["error"] = false;
     $response["services"] = array();
+
 
     // looping through result and preparing services array
     while ($service = $result->fetch_assoc()) {
         $tmp = array();
-        $tmp["id"] = $service["id_sercie"];
-        $tmp["service"] = $service["titre"];
-        $tmp["status"] = $service["active"];
+        $tmp["id_service"] = $service["id_service"];
+        $tmp["titre"] = $service["titre"];
+        $tmp["active"] = $service["active"];
         $tmp["description"] = $service["description"];
         
         array_push($response["services"], $tmp);

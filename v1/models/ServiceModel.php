@@ -12,8 +12,9 @@ class ServiceModel  extends DbHandler
 
 
 
-    public function createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $publication_date, $active, $id_category_service, $use_id) {        
-        $stmt = $this->conn->prepare("INSERT INTO service(titre,
+    public function createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id) {        
+        $stmt = $this->conn->prepare("INSERT INTO service(
+            titre,
             description, 
             price,
             image,
@@ -22,25 +23,21 @@ class ServiceModel  extends DbHandler
             latitude,
             longituge,
             publication_date,
-            active,id_category_service,
+            active,
+            id_category_service,
             id_provider)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)");
-        $stmt->bind_param("ssdsssddsiii", $titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $publication_date, $active, $id_category_service, $id_provider);
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW(), 1, ?, ?)");
+        $stmt->bind_param("ssdsssddii", $titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
         $result = $stmt->execute();
+        //print_r($stmt->error); die;
         $stmt->close();
  
         if ($result) {
             // service row created
             // now assign the service to user
             $new_service_id = $this->conn->insert_id;
-            $res = $this->createUserService($user_id, $new_service_id);
-            if ($res) {
-                // service created successfully
-                return $new_service_id;
-            } else {
-                // service failed to create
-                return NULL;
-            }
+            return $new_service_id;
+            
         } else {
             // service failed to create
             return NULL;
@@ -91,9 +88,9 @@ class ServiceModel  extends DbHandler
      * Fetching all user services
      * @param String $user_id id of the user
      */
-    public function getAllUserServices($user_id) {
-        $stmt = $this->conn->prepare("SELECT t.* FROM service t, user u WHERE t.id_provider = u.id_user AND t.id_provider = ?");
-        $stmt->bind_param("i", $user_id);
+    public function getAllUserServices() {
+        $stmt = $this->conn->prepare("SELECT * FROM service ");
+       // $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $services = $stmt->get_result();
         $stmt->close();

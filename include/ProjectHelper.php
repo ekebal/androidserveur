@@ -58,7 +58,7 @@ function authenticate(\Slim\Route $route) {
  
     // Verifying Authorization Header
     if (isset($headers['Authorization'])) {
-        $db = new DbHandler();
+        $db = new UserModel();
  
         // get the api key
         $api_key = $headers['Authorization'];
