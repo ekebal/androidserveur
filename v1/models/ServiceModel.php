@@ -48,33 +48,19 @@ class ServiceModel  extends DbHandler
      * Fetching single service
      * @param String $service_id id of the service
      */
-    public function getService($service_id, $user_id) {
-        $stmt = $this->conn->prepare("SELECT 
-                t.id_service,
-                t.description,
-                t.price,
-                t.image,
-                t.address,
-                t.city,
-                t.latitude,
-                t.longituge,
-                t.publication_date,
-                t.id_category_service,
-                t.id_provider,
-                c.id_category_service,
-                u.id_user 
-            from service t,
+    public function getService($service_id) {
+        $stmt = $this->conn->prepare("SELECT * from service t,
                  category_service c,
                  user u  
             WHERE
                  t.id_service = ? 
             
                 AND u.id_user = t.id_provider
-                AND u.id_user = ?
+        
                 AND c.id_category_service = t.id_category_service
             
         ");
-        $stmt->bind_param("ii", $service_id, $user_id);
+        $stmt->bind_param("i", $service_id);
         if ($stmt->execute()) {
             $service = $stmt->get_result()->fetch_assoc();
             $stmt->close();
