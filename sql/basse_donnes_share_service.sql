@@ -9,20 +9,24 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Table `user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_` ;
+DROP TABLE IF EXISTS `user` ;
 
-CREATE TABLE IF NOT EXISTS `user_` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id_user` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `pseudo` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password_hash` text NOT NULL,
+  `api_key` varchar(32) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`),
   UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC))
 ENGINE = InnoDB;
 
+ 
 
 -- -----------------------------------------------------
 -- Table `category_service`
