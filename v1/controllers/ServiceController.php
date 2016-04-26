@@ -79,6 +79,8 @@ $app->get('/services/:id', function($service_id) {
         $response["error"] = false;
         $response["id"] = $result["id_service"];
         $response["titre"] = $result["titre"];
+        $response["price"] = $result["price"];
+        $response["image"] = $result["image"];
         $response["description"] = $result["description"];
         $response["active"] = $result["active"];
         
