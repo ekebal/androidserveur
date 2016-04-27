@@ -13,7 +13,7 @@ class UserModel  extends DbHandler
 
 
     public function createUser($first_name, $last_name, $email, $password, $pseudo, $phone) {
-        require_once '../includPassHash.php';
+        require_once '../include/PassHash.php';
         $response = array();
  
         // First check if user already existed in db
