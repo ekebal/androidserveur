@@ -6,13 +6,11 @@ class ServiceModel  extends DbHandler
  
     /**
      * Creating new service
-     * @param String $user_id user id to whom service belongs to
+     * @param String $id_user user id to whom service belongs to
      * @param String $service service text
      */
 
-
-
-    public function createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id) {        
+    public function createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $id_user) {        
         $stmt = $this->conn->prepare("INSERT INTO service(
             titre,
             description, 
@@ -27,9 +25,8 @@ class ServiceModel  extends DbHandler
             id_category_service,
             id_provider)
               VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW(), 1, ?, ?)");
-        $stmt->bind_param("ssdsssddii", $titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
+        $stmt->bind_param("ssdsssddii", $titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $id_user);
         $result = $stmt->execute();
-        //print_r($stmt->error); die;
         $stmt->close();
  
         if ($result) {
@@ -39,6 +36,7 @@ class ServiceModel  extends DbHandler
             return $new_service_id;
             
         } else {
+            print_r($stmt->error); die;
             // service failed to create
             return NULL;
         }
@@ -72,11 +70,11 @@ class ServiceModel  extends DbHandler
  
     /**
      * Fetching all user services
-     * @param String $user_id id of the user
+     * @param String $id_user id of the user
      */
     public function getAllUserServices() {
         $stmt = $this->conn->prepare("SELECT * FROM service ");
-       // $stmt->bind_param("i", $user_id);
+       // $stmt->bind_param("i", $id_user);
         $stmt->execute();
         $services = $stmt->get_result();
         $stmt->close();
@@ -89,8 +87,16 @@ class ServiceModel  extends DbHandler
      * @param String $service service text
      * @param String $status service status
      */
-    public function updateService($user_id, $id_service, $description, $active) {
-        $stmt = $this->conn->prepare("UPDATE services t, user u set t.active = ?, t.description = ? WHERE t.id_service = ? AND t.id_provide = u.id_user AND u.id_user = ?");
+    public function updateService($id_user, $id_service, $description, $active) {
+        $stmt = $this->conn->prepare("UPDATE 
+            service t, 
+            user u 
+                set t.active = ?, 
+                    t.description = ? 
+            WHERE t.id_service = ? 
+                AND t.id_provider = u.id_user 
+                AND u.id_user = ?
+        ");
         $stmt->bind_param("isii", $active, $description, $id_service, $id_user);
         $stmt->execute();
         $num_affected_rows = $stmt->affected_rows;
@@ -104,7 +110,11 @@ class ServiceModel  extends DbHandler
      *   le  champs  active  dans la table  service  
      */
     public function deleteService($id_provider, $id_service) {
-        $stmt = $this->conn->prepare("UPDATE service t set t.active = 0 WHERE t.id_service = ? AND t.id_provider = ?");
+        $stmt = $this->conn->prepare("UPDATE 
+            service t 
+                set t.active = 0 
+            WHERE t.id_service = ? 
+            AND t.id_provider = ?");
         $stmt->bind_param("ii", $id_service, $id_provider);
         $stmt->execute();
         $num_affected_rows = $stmt->affected_rows;

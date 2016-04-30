@@ -1,35 +1,4 @@
 <?php
-$app->post('/services', 'authenticate', function() use ($app) {
-    // check for required params
-    verifyRequiredParams(array('titre'));
-
-    $response = array();
-    $titre = $app->request->post('titre');
-    $description = $app->request->post('description');
-    $price = $app->request->post('price');
-    $image = $app->request->post('image');
-    $address = $app->request->post('address');
-    $city = $app->request->post('city');
-    $latitude = $app->request->post('latitude');
-    $longituge = $app->request->post('longituge');
-    $id_category_service = $app->request->post('id_category_service');
-    global $user_id;
-    
-    $db = new ServiceModel();
-
-    // creating new service
-    $service_id = $db->createService($titre, $description, $price, $image, $address, $city, $latitude, $longituge, $id_category_service, $user_id);
-
-    if ($service_id != NULL) {
-        $response["error"] = false;
-        $response["message"] = "service created successfully";
-        $response["service_id"] = $service_id;
-    } else {
-        $response["error"] = true;
-        $response["message"] = "Failed to create service. Please try again";
-    }
-    echoRespnse(201, $response);
-}); 
 /**
  * Listing all services of particual user
  * method GET
@@ -93,6 +62,37 @@ $app->get('/services/:id', function($service_id) {
 });
 
 
+$app->post('/services', 'authenticate', function() use ($app) {
+    // check for required params
+    verifyRequiredParams(array('titre'));
+
+    $response = array();
+    $titre = $app->request->post('titre');
+    $description = $app->request->post('description');
+    $price = $app->request->post('price');
+    $image = $app->request->post('image');
+    $adress = $app->request->post('adress');
+    $city = $app->request->post('city');
+    $latitude = $app->request->post('latitude');
+    $longituge = $app->request->post('longituge');
+    $id_category_service = $app->request->post('id_category_service');
+    global $user_id;
+    
+    $db = new ServiceModel();
+
+    // creating new service
+    $service_id = $db->createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
+
+    if ($service_id != NULL) {
+        $response["error"] = false;
+        $response["message"] = "service created successfully";
+        $response["service_id"] = $service_id;
+    } else {
+        $response["error"] = true;
+        $response["message"] = "Failed to create service. Please try again";
+    }
+    echoRespnse(201, $response);
+}); 
 
 /**
  * Updating existing service
@@ -100,20 +100,19 @@ $app->get('/services/:id', function($service_id) {
  * params service, status
  * url - /services/:id
  */
-$app->put('/services/:id', 'authenticate', function($id_service) use($app) {
+$app->put('/services/:id', 'authenticate', function($service_id) use($app) {
     // check for required params
-    verifyRequiredParams(array('id_service', 'active', 'description'));
+    verifyRequiredParams(array('service', 'status'));
 
     global $user_id;            
-    $id_service = $app->request->put('id_service');
-    $active = $app->request->put('active');
-    $description = $app->request->put('description');
+    $service = $app->request->put('service');
+    $status = $app->request->put('status');
 
     $db = new ServiceModel();
     $response = array();
 
     // updating service
-    $result = $db->updateService($user_id, $id_service, $description, $active);
+    $result = $db->updateService($user_id, $service_id, $description, $active);
     if ($result) {
         // service updated successfully
         $response["error"] = false;

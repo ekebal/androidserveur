@@ -65,10 +65,18 @@ $app->post('/login', function() use ($app) {
 
         if ($user != NULL) {
             $response["error"] = false;
-            $response['name'] = $user['name'];
+            /*
+            
+            foreach ($result as $key => $value) {
+                $response[$key] = $result[$key];
+            }
+             */
+            $response['first_name'] = $user['first_name'];
+            $response['last_name'] = $user['last_name'];
+            $response['pseudo'] = $user['pseudo'];
             $response['email'] = $user['email'];
-            $response['apiKey'] = $user['api_key'];
-            $response['createdAt'] = $user['created_at'];
+            $response['api_key'] = $user['api_key'];
+            $response['created_at'] = $user['created_at'];
         } else {
             // unknown error occurred
             $response['error'] = true;
