@@ -1,52 +1,47 @@
 <?php
 /**
- * Listing all services of particual user
+ * Listing all orders of particual user
  * method GET
- * url /services          
+ * url /orders          
  */
-$app->get('/services', function() {
+$app->get('/orders', function() {
    // global $user_id;
     $response = array();
-    $db = new ServiceModel();
+    $db = new OrderModel();
 
-    // fetching all user services
-    $result = $db->getAllUserservices();
+    // fetching all user orders
+    $result = $db->getAllUserorders();
        // print_r($result->error);
     $response["error"] = false;
-    $response["services"] = array();
+    $response["orders"] = array();
 
 
-    // looping through result and preparing services array
-    while ($service = $result->fetch_assoc()) {
+    // looping through result and preparing orders array
+    while ($order = $result->fetch_assoc()) {
         $tmp = array();
-        $tmp["id_service"] = $service["id_service"];
-        $tmp["titre"] = $service["titre"];
-        $tmp["active"] = $service["active"];
-        $tmp["description"] = $service["description"];
-        
-        array_push($response["services"], $tmp);
+        array_push($response["orders"], $tmp);
     }
 
     echoRespnse(200, $response);
 });
 
 /**
- * Listing single service of particual user
+ * Listing single order of particual user
  * method GET
- * url /services/:id
- * Will return 404 if the service doesn't belongs to user
+ * url /orders/:id
+ * Will return 404 if the order doesn't belongs to user
  */
-$app->get('/services/:id', function($service_id) {
+$app->get('/orders/:id', function($order_id) {
   //  global $user_id;
     $response = array();
-    $db = new ServiceModel();
+    $db = new OrderModel();
 
-    // fetch service
-    $result = $db->getService($service_id);
+    // fetch order
+    $result = $db->getOrder($order_id);
 
     if ($result != NULL) {
         $response["error"] = false;
-        $response["id"] = $result["id_service"];
+        $response["id"] = $result["id_order"];
         $response["titre"] = $result["titre"];
         $response["price"] = $result["price"];
         $response["image"] = $result["image"];
@@ -62,7 +57,7 @@ $app->get('/services/:id', function($service_id) {
 });
 
 
-$app->post('/services', 'authenticate', function() use ($app) {
+$app->post('/orders', 'authenticate', function() use ($app) {
     // check for required params
     verifyRequiredParams(array('titre'));
 
@@ -75,52 +70,52 @@ $app->post('/services', 'authenticate', function() use ($app) {
     $city = $app->request->post('city');
     $latitude = $app->request->post('latitude');
     $longituge = $app->request->post('longituge');
-    $id_category_service = $app->request->post('id_category_service');
+    $id_category_order = $app->request->post('id_category_order');
     global $user_id;
     
-    $db = new ServiceModel();
+    $db = new OrderModel();
 
-    // creating new service
-    $service_id = $db->createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
+    // creating new order
+    $order_id = $db->createOrder($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_order, $user_id);
 
-    if ($service_id != NULL) {
+    if ($order_id != NULL) {
         $response["error"] = false;
-        $response["message"] = "service created successfully";
-        $response["service_id"] = $service_id;
+        $response["message"] = "order created successfully";
+        $response["order_id"] = $order_id;
     } else {
         $response["error"] = true;
-        $response["message"] = "Failed to create service. Please try again";
+        $response["message"] = "Failed to create order. Please try again";
     }
     echoRespnse(201, $response);
 }); 
 
 /**
- * Updating existing service
+ * Updating existing order
  * method PUT
- * params service, status
- * url - /services/:id
+ * params order, status
+ * url - /orders/:id
  */
-$app->put('/services/:id', 'authenticate', function($service_id) use($app) {
+$app->put('/orders/:id', 'authenticate', function($order_id) use($app) {
     // check for required params
-    verifyRequiredParams(array('service', 'status'));
+    verifyRequiredParams(array('order', 'status'));
 
     global $user_id;            
-    $service = $app->request->put('service');
+    $order = $app->request->put('order');
     $status = $app->request->put('status');
 
-    $db = new ServiceModel();
+    $db = new OrderModel();
     $response = array();
 
-    // updating service
-    $result = $db->updateService($user_id, $service_id, $description, $active);
+    // updating order
+    $result = $db->updateOrder($user_id, $order_id, $description, $active);
     if ($result) {
-        // service updated successfully
+        // order updated successfully
         $response["error"] = false;
-        $response["message"] = "service updated successfully";
+        $response["message"] = "order updated successfully";
     } else {
-        // service failed to update
+        // order failed to update
         $response["error"] = true;
-        $response["message"] = "service failed to update. Please try again!";
+        $response["message"] = "order failed to update. Please try again!";
     }
     echoRespnse(200, $response);
 });
@@ -129,24 +124,24 @@ $app->put('/services/:id', 'authenticate', function($service_id) use($app) {
 
 
 /**
- * Deleting service. Users can delete only their services
+ * Deleting order. Users can delete only their orders
  * method DELETE
- * url /services
+ * url /orders
  */
-$app->delete('/services/:id', 'authenticate', function($service_id) use($app) {
+$app->delete('/orders/:id', 'authenticate', function($order_id) use($app) {
     global $user_id;
 
-    $db = new ServiceModel();
+    $db = new OrderModel();
     $response = array();
-    $result = $db->deleteService($user_id, $service_id);
+    $result = $db->deleteOrder($user_id, $order_id);
     if ($result) {
-        // service deleted successfully
+        // order deleted successfully
         $response["error"] = false;
-        $response["message"] = "service deleted succesfully";
+        $response["message"] = "order deleted succesfully";
     } else {
-        // service failed to delete
+        // order failed to delete
         $response["error"] = true;
-        $response["message"] = "service failed to delete. Please try again!";
+        $response["message"] = "order failed to delete. Please try again!";
     }
     echoRespnse(200, $response);
 });

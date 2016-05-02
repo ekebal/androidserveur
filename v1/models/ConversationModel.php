@@ -16,7 +16,7 @@ class ConversationModel  extends DbHandler
             LIMIT 0, 1;
             ;
         ");
-        $stmt->bind_param("iiii", $id_sender, $id_reciver, $id_reciver, $id_sender);
+        $stmt->bind_param("iiii", $id_sender, $id_reciver, $id_sender, $id_reciver);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         $stmt->close();
