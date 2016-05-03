@@ -15,7 +15,7 @@ $app->get('/messages', 'authenticate', function() use ($app) {
     $result = $db->getAllUserMessages($user_id, $id_conversation, $readed);
        // print_r($result->error);
     $response["user_id"] = $user_id;
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["messages"] = array();
 
 
@@ -36,7 +36,7 @@ $app->get('/messages-unread', 'authenticate', function() use ($app) {
     $result = $db->getTotalUnreadMessagesByConversation($user_id);
        // print_r($result->error);
     $response["user_id"] = $user_id;
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["messages"] = array();
 
     // looping through result and preparing messages array
@@ -63,13 +63,13 @@ $app->get('/messages/:id', function($id_message) {
     $result = $db->getMessage($id_message);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         foreach ($result as $key => $value) {
             $response[$key] = $result[$key];
         }
         echoRespnse(200, $response);
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
@@ -92,12 +92,12 @@ $app->post('/messages', 'authenticate', function() use ($app) {
     $result = $db->createMessage($text, $id_sender, $id_reciver);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "message created successfully";
         $response["id_message"] = $result['id_message'];
         $response["id_conversation"] = $result['id_conversation'];
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Failed to create message. Please try again";
     }
     echoRespnse(201, $response);
@@ -124,11 +124,11 @@ $app->put('/messages/:id', 'authenticate', function($id_message) use($app) {
     $result = $db->updateMessage($text, $id_message);
     if ($result) {
         // message updated successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "message updated successfully";
     } else {
         // message failed to update
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "message failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -156,11 +156,11 @@ $app->put('/messages-setRead/', 'authenticate', function() use($app) {
     $result = $db->setReadedMessage($readed, $id_message);
     if ($result) {
         // message updated successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "message updated successfully";
     } else {
         // message failed to update
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "message failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -183,11 +183,11 @@ $app->delete('/messages/:id', function($id_message) use($app) {
     $result = $db->deleteMessage($id_message);
     if ($result) {
         // message deleted successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "message deleted succesfully";
     } else {
         // message failed to delete
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "message failed to delete. Please try again!";
     }
     echoRespnse(200, $response);

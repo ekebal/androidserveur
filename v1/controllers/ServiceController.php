@@ -21,11 +21,11 @@ $app->post('/services', 'authenticate', function() use ($app) {
     $service_id = $db->createService($titre, $description, $price, $image, $address, $city, $latitude, $longituge, $id_category_service, $user_id);
 
     if ($service_id != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service created successfully";
         $response["service_id"] = $service_id;
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Failed to create service. Please try again";
     }
     echoRespnse(201, $response);
@@ -43,7 +43,7 @@ $app->get('/services', function() {
     // fetching all user services
     $result = $db->getAllUserservices();
        // print_r($result->error);
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["services"] = array();
 
 
@@ -76,7 +76,7 @@ $app->get('/services/:id', function($service_id) {
     $result = $db->getService($service_id);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["id"] = $result["id_service"];
         $response["titre"] = $result["titre"];
         $response["price"] = $result["price"];
@@ -86,7 +86,7 @@ $app->get('/services/:id', function($service_id) {
         
         echoRespnse(200, $response);
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
@@ -116,11 +116,11 @@ $app->put('/services/:id', 'authenticate', function($id_service) use($app) {
     $result = $db->updateService($user_id, $id_service, $description, $active);
     if ($result) {
         // service updated successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service updated successfully";
     } else {
         // service failed to update
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "service failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -142,11 +142,11 @@ $app->delete('/services/:id', 'authenticate', function($service_id) use($app) {
     $result = $db->deleteService($user_id, $service_id);
     if ($result) {
         // service deleted successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service deleted succesfully";
     } else {
         // service failed to delete
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "service failed to delete. Please try again!";
     }
     echoRespnse(200, $response);

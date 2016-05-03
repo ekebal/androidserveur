@@ -12,7 +12,7 @@ $app->get('/orders', function() {
     // fetching all user orders
     $result = $db->getAllUserorders();
        // print_r($result->error);
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["orders"] = array();
 
 
@@ -40,7 +40,7 @@ $app->get('/orders/:id', function($order_id) {
     $result = $db->getOrder($order_id);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["id"] = $result["id_order"];
         $response["titre"] = $result["titre"];
         $response["price"] = $result["price"];
@@ -50,7 +50,7 @@ $app->get('/orders/:id', function($order_id) {
         
         echoRespnse(200, $response);
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
@@ -79,11 +79,11 @@ $app->post('/orders', 'authenticate', function() use ($app) {
     $order_id = $db->createOrder($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_order, $user_id);
 
     if ($order_id != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "order created successfully";
         $response["order_id"] = $order_id;
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Failed to create order. Please try again";
     }
     echoRespnse(201, $response);
@@ -110,11 +110,11 @@ $app->put('/orders/:id', 'authenticate', function($order_id) use($app) {
     $result = $db->updateOrder($user_id, $order_id, $description, $active);
     if ($result) {
         // order updated successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "order updated successfully";
     } else {
         // order failed to update
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "order failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -136,11 +136,11 @@ $app->delete('/orders/:id', 'authenticate', function($order_id) use($app) {
     $result = $db->deleteOrder($user_id, $order_id);
     if ($result) {
         // order deleted successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "order deleted succesfully";
     } else {
         // order failed to delete
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "order failed to delete. Please try again!";
     }
     echoRespnse(200, $response);

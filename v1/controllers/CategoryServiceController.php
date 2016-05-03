@@ -13,7 +13,7 @@ $app->get('/category_services', function() {
     // fetching all user category_services
     $result = $db->getAllCategoryServices();
        // print_r($result->error);
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["category_services"] = array();
 
 
@@ -43,7 +43,7 @@ $app->get('/category_services/:id', function($category_service_id) {
     $result = $db->getService($category_service_id);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["id"] = $result["id_category_service"];
         $response["titre"] = $result["titre"];
         $response["price"] = $result["price"];
@@ -53,7 +53,7 @@ $app->get('/category_services/:id', function($category_service_id) {
         
         echoRespnse(200, $response);
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }

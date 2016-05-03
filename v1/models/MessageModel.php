@@ -36,8 +36,10 @@ class MessageModel  extends DbHandler
             $stmt->close();
             return $message;
         } else {
+
             return NULL;
         }
+
     }
  
     /**
@@ -52,20 +54,20 @@ class MessageModel  extends DbHandler
         if( $readed != null ){
             $sqlFilter .= " AND message.readed = {$readed} ";
         }
-        $stmt = $this->conn->prepare("SELECT    
+        $query = "SELECT    
                 message.*,
                 sender.id_user as sender_id_user,
+                reciver.id_user as reciver_id_user
                 sender.pseudo as sender_pseudo,
-                sender.first_name as sender_first_name,
-                sender.last_name as sender_last_name,
-                sender.phone as sender_phone,
-                sender.email as sender_email,
                 reciver.pseudo as reciver_pseudo,
-                reciver.id_user as reciver_id_user,
-                reciver.first_name as reciverfirst_name,
-                reciver.last_name as reciver_last_name,
-                reciver.phone as reciver_phone,
-                reciver.email as reciver_email
+                -- ,sender.first_name as sender_first_name,
+                -- sender.last_name as sender_last_name,
+                -- sender.phone as sender_phone,
+                -- sender.email as sender_email,
+                -- reciver.first_name as reciverfirst_name,
+                -- reciver.last_name as reciver_last_name,
+                -- reciver.phone as reciver_phone,
+                -- reciver.email as reciver_email
             FROM message,
                  conversation,
                  user sender, 
@@ -78,7 +80,10 @@ class MessageModel  extends DbHandler
                 {$sqlFilter}
             ORDER BY send_date DESC
             LIMIT 0, 100
-        ");
+        ";
+        $stmt = $this->conn->prepare($query);
+        //var_dump($query);
+        //var_dump($id_user);
         $stmt->bind_param("ii", $id_user, $id_user);
         $stmt->execute();
         $messages = $stmt->get_result();

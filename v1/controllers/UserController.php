@@ -28,7 +28,7 @@ $app->post('/register', function() use ($app) {
     $res = $db->createUser($first_name, $last_name, $email, $password, $pseudo, $phone);
 
     if ($res == USER_CREATED_SUCCESSFULLY) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "You are successfully registered";
         echoRespnse(201, $response);
     } else if ($res == USER_CREATE_FAILED) {
@@ -64,7 +64,7 @@ $app->post('/login', function() use ($app) {
         $user = $db->getUserByEmail($email);
 
         if ($user != NULL) {
-            $response["error"] = false;
+            $response["error"] = 0;
             /*
             
             foreach ($result as $key => $value) {
@@ -79,12 +79,12 @@ $app->post('/login', function() use ($app) {
             $response['created_at'] = $user['created_at'];
         } else {
             // unknown error occurred
-            $response['error'] = true;
+            $response['error'] = 1;
             $response['message'] = "An error occurred. Please try again";
         }
     } else {
         // user credentials are wrong
-        $response['error'] = true;
+        $response['error'] = 1;
         $response['message'] = 'Login failed. Incorrect credentials';
     }
 
