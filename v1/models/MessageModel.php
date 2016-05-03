@@ -59,7 +59,7 @@ class MessageModel  extends DbHandler
                 sender.id_user as sender_id_user,
                 reciver.id_user as reciver_id_user
                 sender.pseudo as sender_pseudo,
-                reciver.pseudo as reciver_pseudo,
+                reciver.pseudo as reciver_pseudo
                 -- ,sender.first_name as sender_first_name,
                 -- sender.last_name as sender_last_name,
                 -- sender.phone as sender_phone,
