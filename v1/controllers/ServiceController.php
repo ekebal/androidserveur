@@ -1,13 +1,14 @@
 <?php
 $app->post('/services', 'authenticate', function() use ($app) {
     // check for required params
-    verifyRequiredParams(array('titre'));
+    verifyRequiredParams(array('titre', 'description', 'price', 'address', 'city', 'latitude', 'longituge', 'id_category_service'));
 
     $response = array();
     $titre = $app->request->post('titre');
     $description = $app->request->post('description');
     $price = $app->request->post('price');
-    $image = $app->request->post('image');
+    //$image = $app->request->post('image');
+    $image = "tmp_image.png";
     $address = $app->request->post('address');
     $city = $app->request->post('city');
     $latitude = $app->request->post('latitude');
