@@ -20,7 +20,12 @@ class UserModel  extends DbHandler
         );
  
         // First check if user already existed in db
-        if (!$this->isUserExists($email)) {
+        if ( $this->isPseudoExists($pseudo) ) {
+             // User with same email already existed in the db
+            $response['code'] = USER_PSEUDO_ALREADY_EXISTED;
+            return $response;
+        }
+        elseif (!$this->isUserExists($email)) {
             // Generating password hash
             $password_hash = PassHash::hash($password);
  
@@ -106,6 +111,21 @@ class UserModel  extends DbHandler
     private function isUserExists($email) {
         $stmt = $this->conn->prepare("SELECT id_user from user WHERE email = ?");
         $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+
+    /**
+     * Checking for duplicate user by email address
+     * @param String $email email to check in db
+     * @return boolean
+     */
+    private function isPseudoExists($pseudo) {
+        $stmt = $this->conn->prepare("SELECT id_user from user WHERE pseudo = ?");
+        $stmt->bind_param("s", $pseudo);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;

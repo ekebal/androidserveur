@@ -37,6 +37,10 @@ $app->post('/register', function() use ($app) {
         $response["error"] = true;
         $response["message"] = "Oops! An error occurred while registereing";
         echoRespnse(200, $response);
+    } else if ($res['code'] == USER_PSEUDO_ALREADY_EXISTED) {
+        $response["error"] = true;
+        $response["message"] = "Sorry, this pseudo already existed";
+        echoRespnse(200, $response);
     } else if ($res['code'] == USER_ALREADY_EXISTED) {
         $response["error"] = true;
         $response["message"] = "Sorry, this email already existed";
