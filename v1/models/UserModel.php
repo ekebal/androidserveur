@@ -42,16 +42,16 @@ class UserModel  extends DbHandler
                 $response['user']['api_key'] = $api_key;
                 $response['user']['id_user'] = $new_user_id;
                 $response['code'] = USER_CREATED_SUCCESSFULLY;
-                return $response['code'];
+                return $response;
             } else {
                 // Failed to create user
                 $response['code'] = USER_CREATE_FAILED;
-                return $response['code'];
+                return $response;
             }
         } else {
             // User with same email already existed in the db
             $response['code'] = USER_ALREADY_EXISTED;
-            return $response['code'];
+            return $response;
         }
  
         return $response;
