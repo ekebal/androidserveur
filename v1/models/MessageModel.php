@@ -57,7 +57,7 @@ class MessageModel  extends DbHandler
         $query = "SELECT    
                 message.*,
                 sender.id_user as sender_id_user,
-                reciver.id_user as reciver_id_user
+                reciver.id_user as reciver_id_user,
                 sender.pseudo as sender_pseudo,
                 reciver.pseudo as reciver_pseudo
                 -- ,sender.first_name as sender_first_name,

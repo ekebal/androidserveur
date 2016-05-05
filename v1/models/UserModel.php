@@ -14,7 +14,10 @@ class UserModel  extends DbHandler
 
     public function createUser($first_name, $last_name, $email, $password, $pseudo, $phone) {
         require_once '../include/PassHash.php';
-        $response = array();
+        $response = array(
+            "code" = USER_CREATE_FAILED,
+            "user" = array()
+        );
  
         // First check if user already existed in db
         if (!$this->isUserExists($email)) {
@@ -28,6 +31,7 @@ class UserModel  extends DbHandler
             $stmt = $this->conn->prepare("INSERT INTO user(first_name, last_name, phone, email, pseudo,password_hash, api_key, status) values(?, ?, ?, ?, ?, ?, ?, 1)");
             $stmt->bind_param("sssssss", $first_name, $last_name,$phone, $email,$pseudo, $password_hash, $api_key);
  
+            $new_user_id = $this->conn->insert_id;
             $result = $stmt->execute();
  
             $stmt->close();
@@ -35,14 +39,19 @@ class UserModel  extends DbHandler
             // Check for successful insertion
             if ($result) {
                 // User successfully inserted
-                return USER_CREATED_SUCCESSFULLY;
+                $response['user']['api_key'] = $api_key;
+                $response['user']['id_user'] = $new_user_id;
+                $response['code'] = USER_CREATED_SUCCESSFULLY;
+                return $response['code'];
             } else {
                 // Failed to create user
-                return USER_CREATE_FAILED;
+                $response['code'] = USER_CREATE_FAILED;
+                return $response['code'];
             }
         } else {
             // User with same email already existed in the db
-            return USER_ALREADY_EXISTED;
+            $response['code'] = USER_ALREADY_EXISTED;
+            return $response['code'];
         }
  
         return $response;

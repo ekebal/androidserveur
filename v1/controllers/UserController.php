@@ -27,15 +27,17 @@ $app->post('/register', function() use ($app) {
     $db = new UserModel();
     $res = $db->createUser($first_name, $last_name, $email, $password, $pseudo, $phone);
 
-    if ($res == USER_CREATED_SUCCESSFULLY) {
+    if ($res['code'] == USER_CREATED_SUCCESSFULLY) {
+        $response["api_key"] = $res['user']['api_key'];
+        $response["id_user"] = $res['user']['id_user'];
         $response["error"] = 0;
         $response["message"] = "You are successfully registered";
         echoRespnse(201, $response);
-    } else if ($res == USER_CREATE_FAILED) {
+    } else if ($res['code'] == USER_CREATE_FAILED) {
         $response["error"] = true;
         $response["message"] = "Oops! An error occurred while registereing";
         echoRespnse(200, $response);
-    } else if ($res == USER_ALREADY_EXISTED) {
+    } else if ($res['code'] == USER_ALREADY_EXISTED) {
         $response["error"] = true;
         $response["message"] = "Sorry, this email already existed";
         echoRespnse(200, $response);
