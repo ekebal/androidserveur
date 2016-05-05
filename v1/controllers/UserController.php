@@ -32,7 +32,7 @@ $app->post('/register', function() use ($app) {
         $response["id_user"] = $res['user']['id_user'];
         $response["error"] = 0;
         $response["message"] = "You are successfully registered";
-        echoRespnse(201, $response);
+        echoRespnse(200, $response);
     } else if ($res['code'] == USER_CREATE_FAILED) {
         $response["error"] = 1;
         $response["message"] = "Oops! An error occurred while registereing";
