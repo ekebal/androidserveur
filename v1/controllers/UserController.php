@@ -34,15 +34,15 @@ $app->post('/register', function() use ($app) {
         $response["message"] = "You are successfully registered";
         echoRespnse(201, $response);
     } else if ($res['code'] == USER_CREATE_FAILED) {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Oops! An error occurred while registereing";
         echoRespnse(200, $response);
     } else if ($res['code'] == USER_PSEUDO_ALREADY_EXISTED) {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Sorry, this pseudo already existed";
         echoRespnse(200, $response);
     } else if ($res['code'] == USER_ALREADY_EXISTED) {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Sorry, this email already existed";
         echoRespnse(200, $response);
     }
