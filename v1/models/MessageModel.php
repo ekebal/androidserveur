@@ -76,7 +76,7 @@ class MessageModel  extends DbHandler
                  (sender.id_user = ? OR reciver.id_user = ?)
                 AND conversation.id_conversation =  message.id_conversation
                 AND sender.id_user = message.id_sender
-                AND ( reciver.id_user = conversation.id_reciver)
+                AND ( reciver.id_user = message.id_reciver)
                 {$sqlFilter}
             ORDER BY send_date DESC
             LIMIT 0, 100
@@ -160,7 +160,7 @@ class MessageModel  extends DbHandler
             `id_reciver`,
             readed)
             VALUES(?, ?, NOW(), ?, ?, 0)");
-        $stmt->bind_param("si", $text, $id_conversation, $id_sender, $id_reciver);
+        $stmt->bind_param("siii", $text, $id_conversation, $id_sender, $id_reciver);
         $result = $stmt->execute();
         //print_r($stmt->error); die;
         $stmt->close();
