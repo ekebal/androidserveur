@@ -1,0 +1,1 @@
+<script src="<?php echo SITE_URL.'/'.PLUGIN_DIR ?>/tinymce/tinymce.min.js" type="text/javascript"></script>

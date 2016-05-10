@@ -1,14 +1,15 @@
 <?php
 $app->post('/services', 'authenticate', function() use ($app) {
     // check for required params
-    verifyRequiredParams(array('titre'));
+    verifyRequiredParams(array('titre', 'description', 'price', 'address', 'city', 'latitude', 'longituge', 'id_category_service'));
 
     $response = array();
     $titre = $app->request->post('titre');
     $description = $app->request->post('description');
     $price = $app->request->post('price');
-    $image = $app->request->post('image');
-    $adress = $app->request->post('adress');
+    //$image = $app->request->post('image');
+    $image = "tmp_image.png";
+    $address = $app->request->post('address');
     $city = $app->request->post('city');
     $latitude = $app->request->post('latitude');
     $longituge = $app->request->post('longituge');
@@ -18,14 +19,14 @@ $app->post('/services', 'authenticate', function() use ($app) {
     $db = new ServiceModel();
 
     // creating new service
-    $service_id = $db->createService($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_service, $user_id);
+    $service_id = $db->createService($titre, $description, $price, $image, $address, $city, $latitude, $longituge, $id_category_service, $user_id);
 
     if ($service_id != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service created successfully";
         $response["service_id"] = $service_id;
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Failed to create service. Please try again";
     }
     echoRespnse(201, $response);
@@ -43,7 +44,7 @@ $app->get('/services', function() {
     // fetching all user services
     $result = $db->getAllUserservices();
        // print_r($result->error);
-    $response["error"] = false;
+    $response["error"] = 0;
     $response["services"] = array();
 
 
@@ -76,7 +77,7 @@ $app->get('/services/:id', function($service_id) {
     $result = $db->getService($service_id);
 
     if ($result != NULL) {
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["id"] = $result["id_service"];
         $response["titre"] = $result["titre"];
         $response["price"] = $result["price"];
@@ -86,7 +87,7 @@ $app->get('/services/:id', function($service_id) {
         
         echoRespnse(200, $response);
     } else {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
@@ -100,26 +101,27 @@ $app->get('/services/:id', function($service_id) {
  * params service, status
  * url - /services/:id
  */
-$app->put('/services/:id', 'authenticate', function($service_id) use($app) {
+$app->put('/services/:id', 'authenticate', function($id_service) use($app) {
     // check for required params
-    verifyRequiredParams(array('service', 'status'));
+    verifyRequiredParams(array('id_service', 'active', 'description'));
 
     global $user_id;            
-    $service = $app->request->put('service');
-    $status = $app->request->put('status');
+    $id_service = $app->request->put('id_service');
+    $active = $app->request->put('active');
+    $description = $app->request->put('description');
 
     $db = new ServiceModel();
     $response = array();
 
     // updating service
-    $result = $db->updateService($user_id, $service_id, $description, $active);
+    $result = $db->updateService($user_id, $id_service, $description, $active);
     if ($result) {
         // service updated successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service updated successfully";
     } else {
         // service failed to update
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "service failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -141,11 +143,11 @@ $app->delete('/services/:id', 'authenticate', function($service_id) use($app) {
     $result = $db->deleteService($user_id, $service_id);
     if ($result) {
         // service deleted successfully
-        $response["error"] = false;
+        $response["error"] = 0;
         $response["message"] = "service deleted succesfully";
     } else {
         // service failed to delete
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "service failed to delete. Please try again!";
     }
     echoRespnse(200, $response);

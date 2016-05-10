@@ -13,11 +13,19 @@ class UserModel  extends DbHandler
 
 
     public function createUser($first_name, $last_name, $email, $password, $pseudo, $phone) {
-        require_once '../includPassHash.php';
-        $response = array();
+        require_once '../include/PassHash.php';
+        $response = array(
+            "code" => USER_CREATE_FAILED,
+            "user" => array()
+        );
  
         // First check if user already existed in db
-        if (!$this->isUserExists($email)) {
+        if ( $this->isPseudoExists($pseudo) ) {
+             // User with same email already existed in the db
+            $response['code'] = USER_PSEUDO_ALREADY_EXISTED;
+            return $response;
+        }
+        elseif (!$this->isUserExists($email)) {
             // Generating password hash
             $password_hash = PassHash::hash($password);
  
@@ -28,6 +36,7 @@ class UserModel  extends DbHandler
             $stmt = $this->conn->prepare("INSERT INTO user(first_name, last_name, phone, email, pseudo,password_hash, api_key, status) values(?, ?, ?, ?, ?, ?, ?, 1)");
             $stmt->bind_param("sssssss", $first_name, $last_name,$phone, $email,$pseudo, $password_hash, $api_key);
  
+            $new_user_id = $this->conn->insert_id;
             $result = $stmt->execute();
  
             $stmt->close();
@@ -35,14 +44,19 @@ class UserModel  extends DbHandler
             // Check for successful insertion
             if ($result) {
                 // User successfully inserted
-                return USER_CREATED_SUCCESSFULLY;
+                $response['user']['api_key'] = $api_key;
+                $response['user']['id_user'] = $new_user_id;
+                $response['code'] = USER_CREATED_SUCCESSFULLY;
+                return $response;
             } else {
                 // Failed to create user
-                return USER_CREATE_FAILED;
+                $response['code'] = USER_CREATE_FAILED;
+                return $response;
             }
         } else {
             // User with same email already existed in the db
-            return USER_ALREADY_EXISTED;
+            $response['code'] = USER_ALREADY_EXISTED;
+            return $response;
         }
  
         return $response;
@@ -97,6 +111,21 @@ class UserModel  extends DbHandler
     private function isUserExists($email) {
         $stmt = $this->conn->prepare("SELECT id_user from user WHERE email = ?");
         $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+    }
+
+    /**
+     * Checking for duplicate user by email address
+     * @param String $email email to check in db
+     * @return boolean
+     */
+    private function isPseudoExists($pseudo) {
+        $stmt = $this->conn->prepare("SELECT id_user from user WHERE pseudo = ?");
+        $stmt->bind_param("s", $pseudo);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;

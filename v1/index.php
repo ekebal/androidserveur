@@ -17,9 +17,16 @@ require_once '../include/ProjectHelper.php';
 
 require_once("models/UserModel.php");
 require_once("models/ServiceModel.php");
+require_once("models/OrderModel.php");
+require_once("models/CategoryServiceModel.php");
+require_once("models/ConversationModel.php");
+require_once("models/MessageModel.php");
 
 require_once("controllers/UserController.php");
+require_once("controllers/OrderController.php");
 require_once("controllers/ServiceController.php");
+require_once("controllers/CategoryServiceController.php");
+require_once("controllers/MessageController.php");
 
 $app->run();
 ?>

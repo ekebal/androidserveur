@@ -27,16 +27,22 @@ $app->post('/register', function() use ($app) {
     $db = new UserModel();
     $res = $db->createUser($first_name, $last_name, $email, $password, $pseudo, $phone);
 
-    if ($res == USER_CREATED_SUCCESSFULLY) {
-        $response["error"] = false;
+    if ($res['code'] == USER_CREATED_SUCCESSFULLY) {
+        $response["api_key"] = $res['user']['api_key'];
+        $response["id_user"] = $res['user']['id_user'];
+        $response["error"] = 0;
         $response["message"] = "You are successfully registered";
-        echoRespnse(201, $response);
-    } else if ($res == USER_CREATE_FAILED) {
-        $response["error"] = true;
+        echoRespnse(200, $response);
+    } else if ($res['code'] == USER_CREATE_FAILED) {
+        $response["error"] = 1;
         $response["message"] = "Oops! An error occurred while registereing";
         echoRespnse(200, $response);
-    } else if ($res == USER_ALREADY_EXISTED) {
-        $response["error"] = true;
+    } else if ($res['code'] == USER_PSEUDO_ALREADY_EXISTED) {
+        $response["error"] = 1;
+        $response["message"] = "Sorry, this pseudo already existed";
+        echoRespnse(200, $response);
+    } else if ($res['code'] == USER_ALREADY_EXISTED) {
+        $response["error"] = 1;
         $response["message"] = "Sorry, this email already existed";
         echoRespnse(200, $response);
     }
@@ -64,19 +70,27 @@ $app->post('/login', function() use ($app) {
         $user = $db->getUserByEmail($email);
 
         if ($user != NULL) {
-            $response["error"] = false;
-            $response['name'] = $user['name'];
+            $response["error"] = 0;
+            /*
+            
+            foreach ($result as $key => $value) {
+                $response[$key] = $result[$key];
+            }
+             */
+            $response['first_name'] = $user['first_name'];
+            $response['last_name'] = $user['last_name'];
+            $response['pseudo'] = $user['pseudo'];
             $response['email'] = $user['email'];
-            $response['apiKey'] = $user['api_key'];
-            $response['createdAt'] = $user['created_at'];
+            $response['api_key'] = $user['api_key'];
+            $response['created_at'] = $user['created_at'];
         } else {
             // unknown error occurred
-            $response['error'] = true;
+            $response['error'] = 1;
             $response['message'] = "An error occurred. Please try again";
         }
     } else {
         // user credentials are wrong
-        $response['error'] = true;
+        $response['error'] = 1;
         $response['message'] = 'Login failed. Incorrect credentials';
     }
 

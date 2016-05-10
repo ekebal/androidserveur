@@ -1,0 +1,196 @@
+.btn span { font-size: 12px; display: block; }
+.navbar-header { padding: 5px; }
+.inner-content { background: #fff; }
+.inner-panel { margin-top: 20px; }
+#navbar-default { margin-top: 51px; }
+.company-list h3 { margin: 0px; font-size: 18px; }
+.company-list .list-group-item-text { color: gray; }
+.company-list .action i{ font-size: 20px; }
+.company-list .action { text-align: center; }
+.panel-heading .navbar { margin: 0px; min-height: 20px; }
+.panel-heading { padding: 0px; }
+.panel-heading .navbar-header { padding: 15px 0px 10px; }
+.navbar-nav.navbar-right:last-child { margin: 0px; }
+.login-panel { width: 300px; margin: 10px; }
+.login-panel .panel-title{ padding: 10px; }
+.home-tops .thumbnail  { border: 0px ; box-shadow: none;  }
+.home-tops .thumbs { padding: 5px;}
+.home-tops .border { border: 1px solid #e5e5e5; }
+.home-tops .company_logo { box-shadow: 0px 0px 4px #ccc inset; }
+.home-tops .title-box {height: 50px; }
+.home-tops h3 { font-size: 16px; padding: 5px; text-align: center; }
+.panel-heading h3 {  margin: 0px; padding: 10px; font-size: 16px; font-weight: bold; }
+#map_canvas { width: 100%; height: 450px; }
+.wrap-content { padding: 0px 20px; }
+#enquiryForm input[type=text],#enquiryForm input[type=email],#enquiryForm input[type=tel],#enquiryForm textarea{ padding: 3px; border: 1px solid #e5e5e5;  width: 100%; margin-bottom: 5px; }
+#showEnquiryForm { display: none; background: #f2f2f2; border: 1px solid #e5e5e5; padding: 20px 0px; }
+footer { padding: 5px; }
+.list-group .active{ background-image: linear-gradient(to bottom, #F5F5F5 0%, #E8E8E8 100%); border: 0px; }
+.panel-heading { padding: 10px; }
+#mediafiles figure { margin: 5px 10px; }
+.navbar-default { background: #484848; }
+.navbar-default a { color: #e5e5e5; }
+.navbar-static-side ul li { border-bottom: 1px solid #000; }
+.navbar-static-side ul ul li { background: #373737; }
+.navbar-static-side ul ul ul li { background: #4D4D4D; }
+body { background: #484848; }
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { padding: 5px; line-height: 2; }
+.navbar-static-side { width: 250px; }
+.nav>li>a:hover, .nav>li>a:focus { background-color: #000; }
+.publishedorNot {
+    position: relative; width: 150px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.publishedorNot-checkbox {
+    display: none;
+}
+.publishedorNot-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.publishedorNot-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.publishedorNot-inner:before, .publishedorNot-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.publishedorNot-inner:before {
+    content: "Publiched";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.publishedorNot-inner:after {
+    content: "Un Published";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.publishedorNot-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 75%;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+.publishedorNot-checkbox:checked + .publishedorNot-label .publishedorNot-inner {
+    margin-left: 0;
+}
+.publishedorNot-checkbox:checked + .publishedorNot-label .publishedorNot-switch {
+    right: 0px; 
+}
+
+
+
+.YesNo {
+    position: relative; width: 70px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.YesNo-checkbox {
+    display: none;
+}
+.YesNo-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.YesNo-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.YesNo-inner:before, .YesNo-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.YesNo-inner:before {
+    content: "Yes";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.YesNo-inner:after {
+    content: "No";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.YesNo-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 58%;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+.YesNo-checkbox:checked + .YesNo-label .YesNo-inner {
+    margin-left: 0;
+}
+.YesNo-checkbox:checked + .YesNo-label .YesNo-switch {
+    right: 0px; 
+}
+
+
+.statusCheckBox {
+    position: relative; width: 150px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.statusCheckBox-checkbox {
+    display: none;
+}
+.statusCheckBox-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.statusCheckBox-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.statusCheckBox-inner:before, .statusCheckBox-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.statusCheckBox-inner:before {
+    content: "Complete";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.statusCheckBox-inner:after {
+    content: "Pending";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.statusCheckBox-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 75%;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+.statusCheckBox-checkbox:checked + .statusCheckBox-label .statusCheckBox-inner {
+    margin-left: 0;
+}
+.statusCheckBox-checkbox:checked + .statusCheckBox-label .statusCheckBox-switch {
+    right: 0px; 
+}
+
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
