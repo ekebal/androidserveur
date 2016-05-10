@@ -68,7 +68,7 @@ class MessageModel  extends DbHandler
                 -- reciver.last_name as reciver_last_name,
                 -- reciver.phone as reciver_phone,
                 -- reciver.email as reciver_email
-            FROM message,x
+            FROM message,
                  conversation,
                  user sender, 
                  user reciver  
