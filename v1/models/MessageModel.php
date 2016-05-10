@@ -68,14 +68,14 @@ class MessageModel  extends DbHandler
                 -- reciver.last_name as reciver_last_name,
                 -- reciver.phone as reciver_phone,
                 -- reciver.email as reciver_email
-            FROM message,
+            FROM message,x
                  conversation,
                  user sender, 
                  user reciver  
             WHERE
                  (sender.id_user = ? OR reciver.id_user = ?)
                 AND conversation.id_conversation =  message.id_conversation
-                AND sender.id_user = conversation.id_sender
+                AND sender.id_user = message.id_sender
                 AND reciver.id_user = conversation.id_reciver
                 {$sqlFilter}
             ORDER BY send_date DESC
