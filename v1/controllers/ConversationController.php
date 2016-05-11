@@ -19,9 +19,14 @@ $app->get('/conversations', 'authenticate', function() use ($app) {
 
 
     // looping through result and preparing conversations array
-    while ($message = $result->fetch_assoc()) {
-        $tmp = $message;
-        array_push($response["conversations"], $tmp);
+    while ($tmp = $result->fetch_assoc()) {
+        $tmp2 = $tmp;
+        $tmp2['id_sender'] = $user_id;
+        $tmp2['id_reciver'] = ( $tmp['id_reciver'] != $user_id )? $tmp['id_reciver']: $tmp['id_sender'];
+        $tmp2['reciver_pseudo'] = ( $tmp['id_reciver'] != $user_id )? $tmp['reciver_pseudo']: $tmp['sender_pseudo'];
+        $tmp2['sender_pseudo'] = ( $tmp['id_reciver'] == $user_id )? $tmp['reciver_pseudo']: $tmp['sender_pseudo'];
+
+        array_push($response["conversations"], $tmp2);
     }
     echoRespnse(200, $response);
 });
