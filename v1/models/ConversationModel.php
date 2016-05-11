@@ -30,8 +30,6 @@ class ConversationModel  extends DbHandler
                 AND sender.id_user = conversation.id_sender
                 AND ( reciver.id_user = conversation.id_reciver)
                 {$sqlFilter}
-            ORDER BY send_date DESC
-            LIMIT 0, 100
         ";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("ii", $id_user, $id_user);
