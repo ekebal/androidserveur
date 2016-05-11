@@ -27,6 +27,7 @@ require_once("controllers/OrderController.php");
 require_once("controllers/ServiceController.php");
 require_once("controllers/CategoryServiceController.php");
 require_once("controllers/MessageController.php");
+require_once("controllers/ConversationController.php");
 
 $app->run();
 ?>

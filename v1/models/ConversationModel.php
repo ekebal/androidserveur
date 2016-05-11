@@ -1,7 +1,45 @@
 <?php
 
 class ConversationModel  extends DbHandler
-{
+{   
+    /**
+     * Fetching all user messages
+     * @param String $user_id id of the user
+     */
+    public function getAllUserConversations($id_user) {
+        $sqlFilter = "";
+        $query = "SELECT 
+                conversation.*,   
+                -- sender.id_user as sender_id_user,
+                -- reciver.id_user as reciver_id_user,
+                sender.pseudo as sender_pseudo,
+                reciver.pseudo as reciver_pseudo
+                -- ,sender.first_name as sender_first_name,
+                -- sender.last_name as sender_last_name,
+                -- sender.phone as sender_phone,
+                -- sender.email as sender_email,
+                -- reciver.first_name as reciverfirst_name,
+                -- reciver.last_name as reciver_last_name,
+                -- reciver.phone as reciver_phone,
+                -- reciver.email as reciver_email
+            FROM conversation,
+                 user sender, 
+                 user reciver  
+            WHERE
+                 (sender.id_user = ? OR reciver.id_user = ?)
+                AND sender.id_user = conversation.id_sender
+                AND ( reciver.id_user = conversation.id_reciver)
+                {$sqlFilter}
+            ORDER BY send_date DESC
+            LIMIT 0, 100
+        ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $id_user, $id_user);
+        $stmt->execute();
+        $conversations = $stmt->get_result();
+        $stmt->close();
+        return $conversations;
+    }
 	
     public function getIdConversation($id_sender, $id_reciver) {
         $id_conversation = 0;
