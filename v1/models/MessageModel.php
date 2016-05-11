@@ -55,9 +55,13 @@ class MessageModel  extends DbHandler
             $sqlFilter .= " AND message.readed = {$readed} ";
         }
         $query = "SELECT    
-                message.*,
-                sender.id_user as sender_id_user,
-                reciver.id_user as reciver_id_user,
+                message.id_message,
+                message.id_conversation,
+                message.text,
+                message.send_date,
+                message.read_date,
+                -- sender.id_user as sender_id_user,
+                -- reciver.id_user as reciver_id_user,
                 sender.pseudo as sender_pseudo,
                 reciver.pseudo as reciver_pseudo
                 -- ,sender.first_name as sender_first_name,
