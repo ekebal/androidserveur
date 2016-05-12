@@ -10,25 +10,28 @@ class ConversationModel  extends DbHandler
         $sqlFilter = "";
         $query = "SELECT 
                 conversation.*,   
-                -- sender.id_user as sender_id_user,
-                -- reciver.id_user as reciver_id_user,
                 sender.pseudo as sender_pseudo,
-                reciver.pseudo as reciver_pseudo
-                -- ,sender.first_name as sender_first_name,
-                -- sender.last_name as sender_last_name,
-                -- sender.phone as sender_phone,
-                -- sender.email as sender_email,
-                -- reciver.first_name as reciverfirst_name,
-                -- reciver.last_name as reciver_last_name,
-                -- reciver.phone as reciver_phone,
-                -- reciver.email as reciver_email
+                reciver.pseudo as reciver_pseudo,
+                `last_messages_by_conversation`.`text` AS `text`,
+                `last_messages_by_conversation`.`readed` AS `readed`,
+                `last_messages_by_conversation`.`read_date` AS `read_date`,
+                `last_messages_by_conversation`.`send_date` AS `send_date`,
+                total_messages_by_conversation.total_messages,
+                total_readed_messages_by_conversation.total_readed
+                
             FROM conversation,
                  user sender, 
-                 user reciver  
+                 user reciver,
+                 last_messages_by_conversation,
+                 total_messages_by_conversation,
+                 total_readed_messages_by_conversation
             WHERE
                  (sender.id_user = ? OR reciver.id_user = ?)
                 AND sender.id_user = conversation.id_sender
                 AND ( reciver.id_user = conversation.id_reciver)
+                AND conversation.id_conversation = last_messages_by_conversation.id_conversation
+                AND conversation.id_conversation = total_messages_by_conversation.id_conversation
+                AND conversation.id_conversation = total_readed_messages_by_conversation.id_conversation
                 {$sqlFilter}
         ";
         $stmt = $this->conn->prepare($query);
