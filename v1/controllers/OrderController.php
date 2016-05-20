@@ -86,7 +86,7 @@ $app->post('/orders', 'authenticate', function() use ($app) {
         $response["error"] = 1;
         $response["message"] = "Failed to create order. Please try again";
     }
-    echoRespnse(201, $response);
+    echoRespnse(200, $response);
 }); 
 
 /**

@@ -55,7 +55,7 @@ $app->get('/services/:id', function($service_id) {
         
         echoRespnse(200, $response);
     } else {
-        $response["error"] = 1;
+        $response["error"] = 1  ;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
@@ -88,10 +88,10 @@ $app->post('/services', 'authenticate', function() use ($app) {
         $response["message"] = "service created successfully";
         $response["service_id"] = $service_id;
     } else {
-        $response["error"] = 1;
+        $response["error"] = 1  ;
         $response["message"] = "Failed to create service. Please try again";
     }
-    echoRespnse(201, $response);
+    echoRespnse(200, $response);
 }); 
 
 /**
@@ -119,7 +119,7 @@ $app->put('/services/:id', 'authenticate', function($service_id) use($app) {
         $response["message"] = "service updated successfully";
     } else {
         // service failed to update
-        $response["error"] = 1;
+        $response["error"] = 1  ;
         $response["message"] = "service failed to update. Please try again!";
     }
     echoRespnse(200, $response);
@@ -145,7 +145,7 @@ $app->delete('/services/:id', 'authenticate', function($service_id) use($app) {
         $response["message"] = "service deleted succesfully";
     } else {
         // service failed to delete
-        $response["error"] = 1;
+        $response["error"] = 1  ;
         $response["message"] = "service failed to delete. Please try again!";
     }
     echoRespnse(200, $response);
