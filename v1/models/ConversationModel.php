@@ -19,19 +19,19 @@ class ConversationModel  extends DbHandler
                 total_messages_by_conversation.total_messages,
                 total_readed_messages_by_conversation.total_readed
                 
-            FROM conversation,
-                 user sender, 
-                 user reciver,
-                 last_messages_by_conversation,
-                 total_messages_by_conversation,
-                 total_readed_messages_by_conversation
+             FROM conversation
+                LEFT JOIN  total_readed_messages_by_conversation ON 
+                    conversation.id_conversation = total_readed_messages_by_conversation.id_conversation,
+                user sender, 
+                user reciver,
+                last_messages_by_conversation,
+                total_messages_by_conversation
             WHERE
                  (sender.id_user = ? OR reciver.id_user = ?)
                 AND sender.id_user = conversation.id_sender
                 AND ( reciver.id_user = conversation.id_reciver)
                 AND conversation.id_conversation = last_messages_by_conversation.id_conversation
                 AND conversation.id_conversation = total_messages_by_conversation.id_conversation
-                AND conversation.id_conversation = total_readed_messages_by_conversation.id_conversation
                 {$sqlFilter}
         ";
         $stmt = $this->conn->prepare($query);
