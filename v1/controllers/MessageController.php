@@ -97,8 +97,8 @@ $app->post('/messages', 'authenticate', function() use ($app) {
         $sender = $Umodel->getUserById($user_id);
         //Tmp:
         $NotModel = new NotificationModel();
-        $titre = "Nouveau Message - ";
-        $message = "" . substr($text, 0, 100) . " - " . print_r($sender, 1);
+        $titre = "Nouveau Message de {$sender['pseudo']}";
+        $message = " -> " . substr($text, 0, 100) . " - ";
         $activity = "Conversations";
         $activity_data = json_encode( array( 
             'id_message' => $result['id_message'],
