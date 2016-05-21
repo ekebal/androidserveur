@@ -18,19 +18,9 @@ class NotificationModel  extends DbHandler
                     activity,
                     activity_data,
                     message,
-                    notified,
-                    created_at
+                    notified
                 )
-                VALUES
-                    (
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    0,
-                    NOW()
-                )
+                VALUES (?, ?, ?, ?, ?, 0 )
         ");
         $stmt->bind_param("issss", $id_user, $titre, $activity, $activity_data, $message);
         $result = $stmt->execute();
