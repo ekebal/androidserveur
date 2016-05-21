@@ -105,9 +105,10 @@ class NotificationModel  extends DbHandler
     public function deleteNotification($str_id_notifications) {
         $stmt = $this->conn->prepare("UPDATE 
             notification t 
-                set t.notified = 1 
+                set t.notified = 1, 
+                    notified_at = NOW()
             WHERE t.id_notification IN ({$str_id_notifications}) 
-                ");
+        ");
         //$stmt->bind_param("", $str_id_notifications);
         $stmt->execute();
         $num_affected_rows = $stmt->affected_rows;

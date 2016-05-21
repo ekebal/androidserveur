@@ -94,20 +94,23 @@ $app->get('/notifications/:id', function($notification_id) {
  * method DELETE
  * url /notifications
  */
-$app->delete('/notifications/:id', 'authenticate', function($notification_id) use($app) {
-    global $user_id;
+$app->post('/update_notifications', 'authenticate',  function() use ($app) {
+//$app->delete('/notifications/:id', 'authenticate', function($notification_id) use($app) {
+    //global $user_id;
+    verifyRequiredParams(array('str_ids_notification'));
 
+    $str_ids_notification = $app->request->post('str_ids_notification');
     $db = new NotificationModel();
     $response = array();
-    $result = $db->deleteNotification($user_id, $notification_id);
+    $result = $db->deleteNotification($str_ids_notification);
     if ($result) {
         // notification deleted successfully
         $response["error"] = 0;
-        $response["message"] = "notification deleted succesfully";
+        $response["message"] = "notifications {$str_ids_notification} deleted succesfully";
     } else {
         // notification failed to delete
         $response["error"] = 1;
-        $response["message"] = "notification failed to delete. Please try again!";
+        $response["message"] = "notifications {$str_ids_notification} failed to delete. Please try again!";
     }
     echoRespnse(200, $response);
 });
