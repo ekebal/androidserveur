@@ -81,6 +81,16 @@ class ServiceModel  extends DbHandler
         return $services;
     }
  
+
+ public function getAllServicesCategory($id_category_service) {
+        $stmt = $this->conn->prepare("SELECT * FROM service s WHERE s.id_category_service = ?");
+        $stmt->bind_param("i", $id_category_service);
+        $stmt->execute();
+        $services = $stmt->get_result();
+        $stmt->close();
+        return $services;
+    }
+ 
     /**
      * Updating service
      * @param String $service_id id of the service

@@ -41,6 +41,7 @@ $app->get('/services', function() {
     $response = array();
     $db = new ServiceModel();
 
+    
     // fetching all user services
     $result = $db->getAllUserservices();
        // print_r($result->error);
@@ -152,5 +153,43 @@ $app->delete('/services/:id', 'authenticate', function($service_id) use($app) {
     }
     echoRespnse(200, $response);
 });
+
+
+
+
+/**
+    *  Get  services  category 
+    *method  get 
+    *url /services/ id 
+*/
+
+$app->get('/category_services', function() use ($app) {
+   // global $user_id;
+    $response = array();
+    $db = new ServiceModel();
+     $id_category_service = $app->request->get('id_category_service');
+
+    // fetching all user services
+    $result = $db->getAllServicesCategory($id_category_service);
+    //$result = $db->getAllServicesCategory($id_category_service);
+       // print_r($result->error);
+    $response["error"] = 0;
+    $response["services"] = array();
+
+    // looping through result and preparing services array
+    while ($service = $result->fetch_assoc()) {
+        $tmp = array();
+        $tmp["id_service"] = $service["id_service"];
+        $tmp["titre"] = $service["titre"];
+        $tmp["active"] = $service["active"];
+        $tmp["description"] = $service["description"];
+        $tmp["id_category_service"] = $service["id_category_service"];
+        
+        array_push($response["services"], $tmp);
+    }
+
+    echoRespnse(200, $response);
+});
+
 
 ?>
