@@ -92,6 +92,21 @@ $app->post('/messages', 'authenticate', function() use ($app) {
     $result = $db->createMessage($text, $id_sender, $id_reciver);
 
     if ($result != NULL) {
+        $Umodel = new UserModel();
+
+        $sender = $Umodel->getUserById($user_id);
+        //Tmp:
+        $NotModel = new NotificationModel();
+        $titre = "Nouveau Message - ";
+        $message = "" . substr($text, 0, 100) . " - " . print_r($sender, 1);
+        $activity = "Conversations";
+        $activity_data = json_encode( array( 
+            'id_message' => $result['id_message'],
+            'id_conversation' => $result['id_conversation']
+        ) );
+        $notification_id = $NotModel->createNotification($user_id, $titre, $activity, $activity_data, $message);
+
+
         $response["error"] = 0;
         $response["message"] = "message created successfully";
         $response["id_message"] = $result['id_message'];
@@ -100,7 +115,7 @@ $app->post('/messages', 'authenticate', function() use ($app) {
         $response["error"] = 1;
         $response["message"] = "Failed to create message. Please try again";
     }
-    echoRespnse(201, $response);
+    echoRespnse(200, $response);
 }); 
 
 /**

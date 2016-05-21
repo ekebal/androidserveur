@@ -41,13 +41,9 @@ $app->get('/orders/:id', function($order_id) {
 
     if ($result != NULL) {
         $response["error"] = 0;
-        $response["id"] = $result["id_order"];
-        $response["titre"] = $result["titre"];
-        $response["price"] = $result["price"];
-        $response["image"] = $result["image"];
-        $response["description"] = $result["description"];
-        $response["active"] = $result["active"];
-        
+        foreach ($result as $key => $value) {
+            $response[$key] = $result[$key];
+        }
         echoRespnse(200, $response);
     } else {
         $response["error"] = 1;
@@ -59,24 +55,17 @@ $app->get('/orders/:id', function($order_id) {
 
 $app->post('/orders', 'authenticate', function() use ($app) {
     // check for required params
-    verifyRequiredParams(array('titre'));
+    verifyRequiredParams(array('id_service'));
 
     $response = array();
-    $titre = $app->request->post('titre');
-    $description = $app->request->post('description');
-    $price = $app->request->post('price');
-    $image = $app->request->post('image');
-    $adress = $app->request->post('adress');
-    $city = $app->request->post('city');
-    $latitude = $app->request->post('latitude');
-    $longituge = $app->request->post('longituge');
-    $id_category_order = $app->request->post('id_category_order');
+    $id_service = $app->request->post('id_service');
+    $payment_code = "";//DB -> AutoCreation
     global $user_id;
     
     $db = new OrderModel();
 
     // creating new order
-    $order_id = $db->createOrder($titre, $description, $price, $image, $adress, $city, $latitude, $longituge, $id_category_order, $user_id);
+    $order_id = $db->createOrder($user_id, $id_service);
 
     if ($order_id != NULL) {
         $response["error"] = 0;
@@ -86,7 +75,7 @@ $app->post('/orders', 'authenticate', function() use ($app) {
         $response["error"] = 1;
         $response["message"] = "Failed to create order. Please try again";
     }
-    echoRespnse(201, $response);
+    echoRespnse(200, $response);
 }); 
 
 /**

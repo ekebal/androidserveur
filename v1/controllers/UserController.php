@@ -30,6 +30,11 @@ $app->post('/register', function() use ($app) {
     if ($res['code'] == USER_CREATED_SUCCESSFULLY) {
         $response["api_key"] = $res['user']['api_key'];
         $response["id_user"] = $res['user']['id_user'];
+        $response["first_name"] = $res['user']['first_name'];
+        $response["last_name"] = $res['user']['last_name'];
+        $response["email"] = $res['user']['email'];
+        $response["pseudo"] = $res['user']['pseudo'];
+        $response["phone"] = $res['user']['phone'];
         $response["error"] = 0;
         $response["message"] = "You are successfully registered";
         echoRespnse(200, $response);
@@ -83,6 +88,9 @@ $app->post('/login', function() use ($app) {
             $response['email'] = $user['email'];
             $response['api_key'] = $user['api_key'];
             $response['created_at'] = $user['created_at'];
+            $response["id_user"] = $user['id_user'];
+            $response["phone"] = $user['phone'];
+            
         } else {
             // unknown error occurred
             $response['error'] = 1;

@@ -57,9 +57,13 @@ class MessageModel  extends DbHandler
             $sqlFilter .= " AND message.readed = {$readed} ";
         }
         $query = "SELECT    
-                message.*,
-                sender.id_user as sender_id_user,
-                reciver.id_user as reciver_id_user,
+                message.id_message,
+                message.id_conversation,
+                message.text,
+                message.send_date,
+                message.read_date,
+                -- sender.id_user as sender_id_user,
+                -- reciver.id_user as reciver_id_user,
                 sender.pseudo as sender_pseudo,
                 reciver.pseudo as reciver_pseudo
                 -- ,sender.first_name as sender_first_name,
@@ -77,8 +81,8 @@ class MessageModel  extends DbHandler
             WHERE
                  (sender.id_user = ? OR reciver.id_user = ?)
                 AND conversation.id_conversation =  message.id_conversation
-                AND sender.id_user = conversation.id_sender
-                AND reciver.id_user = conversation.id_reciver
+                AND sender.id_user = message.id_sender
+                AND ( reciver.id_user = message.id_reciver)
                 {$sqlFilter}
             ORDER BY send_date DESC
             LIMIT 0, 100
@@ -158,9 +162,18 @@ class MessageModel  extends DbHandler
             `text`,
             `id_conversation`,
             `send_date`,
+            `id_sender`,
+            `id_reciver`,
             readed)
-            VALUES(?, ?, NOW(), 0)");
-        $stmt->bind_param("si", $text, $id_conversation);
+            VALUES(?, ?, NOW(), ?, ?, 0)");
+        /*
+        
+        var_dump($text);
+        var_dump($id_conversation);
+        var_dump($id_sender);
+        var_dump($id_reciver);
+         */
+        $stmt->bind_param("siii", $text, $id_conversation, $id_sender, $id_reciver);
         $result = $stmt->execute();
         //print_r($stmt->error); die;
         $stmt->close();

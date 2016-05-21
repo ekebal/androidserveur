@@ -25,7 +25,7 @@ function verifyRequiredParams($required_fields) {
         // echo error json and stop the app
         $response = array();
         $app = \Slim\Slim::getInstance();
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
         echoRespnse(400, $response);
         $app->stop();
@@ -38,7 +38,7 @@ function verifyRequiredParams($required_fields) {
 function validateEmail($email) {
     $app = \Slim\Slim::getInstance();
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = 'Email address is not valid';
         echoRespnse(400, $response);
         $app->stop();
@@ -65,7 +65,7 @@ function authenticate(\Slim\Route $route) {
         // validating api key
         if (!$db->isValidApiKey($api_key)) {
             // api key is not present in users table
-            $response["error"] = true;
+            $response["error"] = 1;
             $response["message"] = "Access Denied. Invalid Api key";
             echoRespnse(401, $response);
             $app->stop();
@@ -78,7 +78,7 @@ function authenticate(\Slim\Route $route) {
         }
     } else {
         // api key is missing in header
-        $response["error"] = true;
+        $response["error"] = 1;
         $response["message"] = "Api key is misssing";
         echoRespnse(400, $response);
         $app->stop();

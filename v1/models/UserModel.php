@@ -46,6 +46,11 @@ class UserModel  extends DbHandler
                 // User successfully inserted
                 $response['user']['api_key'] = $api_key;
                 $response['user']['id_user'] = $new_user_id;
+                $response['user']['first_name'] = $first_name;
+                $response['user']['last_name'] = $last_name;
+                $response['user']['phone'] = $phone;
+                $response['user']['email'] = $email;
+                $response['user']['pseudo'] = $pseudo;
                 $response['code'] = USER_CREATED_SUCCESSFULLY;
                 return $response;
             } else {
@@ -138,8 +143,27 @@ class UserModel  extends DbHandler
      * @param String $email User email id
      */
     public function getUserByEmail($email) {
-        $stmt = $this->conn->prepare("SELECT last_name, first_name, phone, email, pseudo, api_key, status, created_at FROM user WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT id_user, last_name, first_name, phone, email, pseudo, api_key, status, created_at FROM user WHERE email = ?");
         $stmt->bind_param("s", $email);
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $user;
+        } else {
+            return NULL;
+        }
+    }
+
+    /**
+     * Fetching user by email
+     * @param String $email User email id
+     */
+    public function getUserById($id_user) {
+        $stmt = $this->conn->prepare("SELECT id_user, last_name, first_name, phone, email, pseudo, api_key, status, created_at 
+            FROM user 
+            WHERE id_user = ?
+        ");
+        $stmt->bind_param("s", $id_user);
         if ($stmt->execute()) {
             $user = $stmt->get_result()->fetch_assoc();
             $stmt->close();

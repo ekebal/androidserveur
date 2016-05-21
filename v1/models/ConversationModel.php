@@ -1,7 +1,46 @@
 <?php
 
 class ConversationModel  extends DbHandler
-{
+{   
+    /**
+     * Fetching all user messages
+     * @param String $user_id id of the user
+     */
+    public function getAllUserConversations($id_user) {
+        $sqlFilter = "";
+        $query = "SELECT 
+                conversation.*,   
+                sender.pseudo as sender_pseudo,
+                reciver.pseudo as reciver_pseudo,
+                `last_messages_by_conversation`.`text` AS `text`,
+                `last_messages_by_conversation`.`readed` AS `readed`,
+                `last_messages_by_conversation`.`read_date` AS `read_date`,
+                `last_messages_by_conversation`.`send_date` AS `send_date`,
+                total_messages_by_conversation.total_messages,
+                total_readed_messages_by_conversation.total_readed
+                
+             FROM conversation
+                LEFT JOIN  total_readed_messages_by_conversation ON 
+                    conversation.id_conversation = total_readed_messages_by_conversation.id_conversation,
+                user sender, 
+                user reciver,
+                last_messages_by_conversation,
+                total_messages_by_conversation
+            WHERE
+                 (sender.id_user = ? OR reciver.id_user = ?)
+                AND sender.id_user = conversation.id_sender
+                AND ( reciver.id_user = conversation.id_reciver)
+                AND conversation.id_conversation = last_messages_by_conversation.id_conversation
+                AND conversation.id_conversation = total_messages_by_conversation.id_conversation
+                {$sqlFilter}
+        ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $id_user, $id_user);
+        $stmt->execute();
+        $conversations = $stmt->get_result();
+        $stmt->close();
+        return $conversations;
+    }
 	
     public function getIdConversation($id_sender, $id_reciver) {
         $id_conversation = 0;
