@@ -72,14 +72,28 @@ class ServiceModel  extends DbHandler
      * Fetching all user services
      * @param String $id_user id of the user
      */
-    public function getAllUserServices() {
-        $stmt = $this->conn->prepare("SELECT * FROM service ");
-       // $stmt->bind_param("i", $id_user);
+
+    public function getAllUserServices($titre_service = ""){
+        $requett="";
+        if ( ! empty($titre_service) )
+        {
+            $requett="AND s.titre LIKE '%$titre_service%' ";
+        }
+
+        $stmt = $this->conn->prepare("SELECT s.* , c.name, u.pseudo, c.image as imagecategory fROM  category_service c, service s, user u   WHERE 
+                c.id_category_service=s.id_category_service AND s.id_provider=u.id_user AND
+            1>0 {$requett}");
+
+       
+
         $stmt->execute();
+  
         $services = $stmt->get_result();
         $stmt->close();
         return $services;
     }
+   
+    
  
 
  public function getAllServicesCategory($id_category_service) {
