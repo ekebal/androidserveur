@@ -92,6 +92,7 @@ $app->post('/messages', 'authenticate', function() use ($app) {
     $result = $db->createMessage($text, $id_sender, $id_reciver);
 
     if ($result != NULL) {
+        $Umodel = new UserModel();
 
         $sender = $Umodel->getUserById($user_id);
         //Tmp:
