@@ -185,11 +185,11 @@ $app->put('/messages-setRead/', 'authenticate', function() use($app) {
     echoRespnse(200, $response);
 });
 
-$app->put('/messages_sedListReaded/', function() use($app) {
+$app->post('/messages_sedListReaded/', function() use($app) {
     // check for required params
     verifyRequiredParams(array('str_list_id_message'));
 
-    $str_list_id_message = $app->request->put('str_list_id_message');
+    $str_list_id_message = $app->request->post('str_list_id_message');
     
     $db = new MessageModel();
     $response = array();
