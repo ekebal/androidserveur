@@ -17,7 +17,7 @@ class ConversationModel  extends DbHandler
                 `last_messages_by_conversation`.`read_date` AS `read_date`,
                 `last_messages_by_conversation`.`send_date` AS `send_date`,
                 total_messages_by_conversation.total_messages,
-                total_readed_messages_by_conversation.total_readed
+                coalesce( total_readed_messages_by_conversation.total_readed, 0) AS total_readed
                 
              FROM conversation
                 LEFT JOIN  total_readed_messages_by_conversation ON 

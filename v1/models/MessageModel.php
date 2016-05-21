@@ -60,6 +60,7 @@ class MessageModel  extends DbHandler
                 message.text,
                 message.send_date,
                 message.read_date,
+                message.readed,
                 -- sender.id_user as sender_id_user,
                 -- reciver.id_user as reciver_id_user,
                 sender.pseudo as sender_pseudo,
@@ -228,6 +229,25 @@ class MessageModel  extends DbHandler
                 WHERE id_message = ?
         ");
         $stmt->bind_param("ii", $readed, $id_message);
+        $stmt->execute();
+        $num_affected_rows = $stmt->affected_rows;
+        $stmt->close();
+        return $num_affected_rows > 0;
+    }
+
+     /**
+     * setReadedMessage message
+     * @param String $message_id id of the message
+     * @param String $message message text
+     * @param String $status message status
+     */
+    public function setReadedMessageList($setReadedMessageList) {
+        $stmt = $this->conn->prepare("UPDATE message
+                SET
+                    readed = 1
+                    ,read_date = NOW()
+                WHERE id_message IN ($setReadedMessageList)
+        ");
         $stmt->execute();
         $num_affected_rows = $stmt->affected_rows;
         $stmt->close();

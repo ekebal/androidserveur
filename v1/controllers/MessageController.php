@@ -185,6 +185,29 @@ $app->put('/messages-setRead/', 'authenticate', function() use($app) {
     echoRespnse(200, $response);
 });
 
+$app->put('/messages_sedListReaded/', function() use($app) {
+    // check for required params
+    verifyRequiredParams(array('str_list_id_message'));
+
+    $str_list_id_message = $app->request->put('str_list_id_message');
+    
+    $db = new MessageModel();
+    $response = array();
+
+    // updating message
+    $result = $db->setReadedMessageList($str_list_id_message);
+    if ($result) {
+        // message updated successfully
+        $response["error"] = 0;
+        $response["message"] = "message updated successfully";
+    } else {
+        // message failed to update
+        $response["error"] = 1;
+        $response["message"] = "message failed to update. Please try again!";
+    }
+    echoRespnse(200, $response);
+});
+
 
 
 
