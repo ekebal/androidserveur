@@ -100,10 +100,14 @@ $app->post('/messages', 'authenticate', function() use ($app) {
         $titre = "Nouveau Message de {$sender['pseudo']}";
         $message = " -> " . substr($text, 0, 100) . " - ";
         $activity = "Conversations";
+        /*
+        
         $activity_data = json_encode( array( 
             'id_message' => $result['id_message'],
             'id_conversation' => $result['id_conversation']
         ) );
+         */
+        $activity_data = "";
         $notification_id = $NotModel->createNotification($user_id, $titre, $activity, $activity_data, $message);
 
 
