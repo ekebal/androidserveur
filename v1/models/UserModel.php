@@ -153,6 +153,25 @@ class UserModel  extends DbHandler
             return NULL;
         }
     }
+
+    /**
+     * Fetching user by email
+     * @param String $email User email id
+     */
+    public function getUserById($id_user) {
+        $stmt = $this->conn->prepare("SELECT id_user, last_name, first_name, phone, email, pseudo, api_key, status, created_at 
+            FROM user 
+            WHERE id_user = ?
+        ");
+        $stmt->bind_param("s", $id_user);
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $user;
+        } else {
+            return NULL;
+        }
+    }
  
     /**
      * Fetching user api key

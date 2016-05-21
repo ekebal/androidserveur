@@ -164,6 +164,13 @@ class MessageModel  extends DbHandler
             `id_reciver`,
             readed)
             VALUES(?, ?, NOW(), ?, ?, 0)");
+        /*
+        
+        var_dump($text);
+        var_dump($id_conversation);
+        var_dump($id_sender);
+        var_dump($id_reciver);
+         */
         $stmt->bind_param("siii", $text, $id_conversation, $id_sender, $id_reciver);
         $result = $stmt->execute();
         //print_r($stmt->error); die;
