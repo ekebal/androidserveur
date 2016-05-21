@@ -2,7 +2,7 @@
 
 class NotificationModel  extends DbHandler
 {
-	/* ------------- `notifications` table method ------------------ */
+	/* ------------- notifications table method ------------------ */
  
     /**
      * Creating new notification
@@ -11,15 +11,15 @@ class NotificationModel  extends DbHandler
      */
 
     public function createNotification($id_user, $titre, $activity, $activity_data, $message) {        
-        $stmt = $this->conn->prepare("INSERT INTO `notification`
+        $stmt = $this->conn->prepare("INSERT INTO notification
                 (
-                    `id_user`,
-                    `titre`,
-                    `activity`,
-                    `activity_data`,
-                    `message`,
-                    `notified`,
-                    `created_at`
+                    id_user,
+                    titre,
+                    activity,
+                    activity_data,
+                    message,
+                    notified,
+                    created_at
                 )
                 VALUES
                     (
@@ -55,17 +55,17 @@ class NotificationModel  extends DbHandler
      */
     public function getNotification($notification_id) {
         $stmt = $this->conn->prepare("SELECT 
-                `notification`.`id_notification`,
-                `notification`.`id_user`,
-                `notification`.`titre`,
-                `notification`.`activity`,
-                `notification`.`activity_data`,
-                `notification`.`message`,
-                `notification`.`notified`,
-                `notification`.`created_at`,
-                `notification`.`notified_at`
-            FROM `notification`
-            WHERE `notification`.`id_notification` = ?;
+                notification.id_notification,
+                notification.id_user,
+                notification.titre,
+                notification.activity,
+                notification.activity_data,
+                notification.message,
+                notification.notified,
+                notification.created_at,
+                notification.notified_at
+            FROM notification
+            WHERE notification.id_notification = ?;
         ");
         $stmt->bind_param("i", $notification_id);
         if ($stmt->execute()) {
@@ -83,17 +83,17 @@ class NotificationModel  extends DbHandler
      */
     public function getUserPendingNotifications($id_user) {
         $stmt = $this->conn->prepare("SELECT 
-                `notification`.`id_notification`,
-                `notification`.`id_user`,
-                `notification`.`titre`,
-                `notification`.`activity`,
-                `notification`.`activity_data`,
-                `notification`.`message`,
-                `notification`.`notified`,
-                `notification`.`created_at`,
-                `notification`.`notified_at`
-            FROM `notification`
-            WHERE `notification`.`id_user` = ?
+                notification.id_notification,
+                notification.id_user,
+                notification.titre,
+                notification.activity,
+                notification.activity_data,
+                notification.message,
+                notification.notified,
+                notification.created_at,
+                notification.notified_at
+            FROM notification
+            WHERE notification.id_user = ?
                 AND notified = 0;
         ");
         $stmt->bind_param("i", $id_user);
