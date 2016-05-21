@@ -30,7 +30,7 @@ class NotificationModel  extends DbHandler
                     ?,
                     0,
                     NOW()
-                );
+                )
         ");
         $stmt->bind_param("issss", $id_user, $titre, $activity, $activity_data, $message);
         $result = $stmt->execute();
