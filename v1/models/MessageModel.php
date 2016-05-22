@@ -85,8 +85,8 @@ class MessageModel  extends DbHandler
                 AND sender.id_user = message.id_sender
                 AND ( reciver.id_user = message.id_reciver)
                 {$sqlFilter}
-            ORDER BY send_date DESC
-            LIMIT 0, 100
+            ORDER BY send_date ASC
+        --    LIMIT 0, 100
         ";
         $stmt = $this->conn->prepare($query);
         //var_dump($query);
