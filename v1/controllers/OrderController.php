@@ -67,8 +67,23 @@ $app->post('/orders', 'authenticate', function() use ($app) {
     $order_id = $db->createOrder($user_id, $id_service);
 
     if ($order_id != NULL) {
+
+        $userModel = new UserModel();
+        $messageModel = new MessageModel();
+        $user = $userModel->getUserById($user_id);
+        $order = $db->getOrder($order_id);
+        $text = " Le code de la reservation du service ({$order['titre']}) c'est ({$order['code']}).\n\n Vous devez le donner une fois le fournisseur accomplai son service.\n Merci ";
+        $NotModel = new NotificationModel();
+        $titre = "Nouvelle Reservation {$order['titre']}!";
+        $message = " -> " . substr($text, 0, 100) . " - ";
+        $activity = "Orders";
+        $activity_data = "";
+        $result = $messageModel->createMessage($text, $user_id, $order['id_provider']);
+        $notification_id = $NotModel->createNotification($user_id, $titre, $activity, $activity_data, $message);
+
+
         $response["error"] = 0;
-        $response["message"] = "order created successfully";
+        $response["message"] = "Order created successfully";
         $response["order_id"] = $order_id;
     } else {
         $response["error"] = 1;
