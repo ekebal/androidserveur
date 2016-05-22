@@ -10,7 +10,7 @@ $app->get('/orders', function() {
     $db = new OrderModel();
 
     // fetching all user orders
-    $result = $db->getAllUserorders();
+    $result = $db->getAllUserOrders();
        // print_r($result->error);
     $response["error"] = 0;
     $response["orders"] = array();
@@ -18,8 +18,7 @@ $app->get('/orders', function() {
 
     // looping through result and preparing orders array
     while ($order = $result->fetch_assoc()) {
-        $tmp = array();
-        array_push($response["orders"], $tmp);
+        array_push($response["orders"], $order);
     }
 
     echoRespnse(200, $response);

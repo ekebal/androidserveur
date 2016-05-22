@@ -82,8 +82,27 @@ class OrderModel  extends DbHandler
      * @param String $id_user id of the user
      */
     public function getAllUserOrders() {
-        $stmt = $this->conn->prepare("SELECT * FROM `order` ");
-       // $stmt->bind_param("i", $id_user);
+       $stmt = $this->conn->prepare("SELECT 
+                `order`.*
+                ,u.pseudo AS client_pseudo
+                ,u.first_name AS client_first_name
+                ,u.last_name AS client_last_name
+                ,u.phone AS client_phone
+                ,u.email AS client_email
+                ,s.*
+                ,p.pseudo AS provider_pseudo
+                ,p.first_name AS provider_first_name
+                ,p.last_name AS provider_last_name
+                ,p.phone AS provider_phone
+                ,p.email AS provider_email
+            FROM `order`
+                LEFT JOIN user u  ON 
+                    u.id_user = `order`.id_user
+                LEFT JOIN service s  ON 
+                    s.id_service = `order`.id_service
+                LEFT JOIN user p  ON 
+                    p.id_user = s.id_provider
+        ");
         $stmt->execute();
         $orders = $stmt->get_result();
         $stmt->close();
