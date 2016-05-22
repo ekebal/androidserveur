@@ -41,8 +41,9 @@ $app->get('/services', function() use($app)  {
     $response = array();
     $db = new ServiceModel();
     $titre_service = $app->request->get('titre_service');
+    $id_category = $app->request->get('id_category');
     // fetching all user services
-    $result = $db->getAllUserservices($titre_service);
+    $result = $db->getAllUserservices($titre_service,$id_category);
        // print_r($result->error);
     $response["error"] = 0;
     $response["services"] = array();
