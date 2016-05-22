@@ -73,16 +73,23 @@ class ServiceModel  extends DbHandler
      * @param String $id_user id of the user
      */
 
-    public function getAllUserServices($titre_service = ""){
+    public function getAllUserServices($titre_service = "",$id_category=""){
         $requett="";
         if ( ! empty($titre_service) )
         {
             $requett="AND s.titre LIKE '%$titre_service%' ";
         }
 
-        $stmt = $this->conn->prepare("SELECT s.* , c.name, u.pseudo, c.image as imagecategory fROM  category_service c, service s, user u   WHERE 
-                c.id_category_service=s.id_category_service AND s.id_provider=u.id_user AND
-            1>0 {$requett}");
+            if(!empty($id_category)){
+            $requett .= " AND s.id_category_service = {$id_category} ";
+        }
+        $stmt = $this->conn->prepare("SELECT s.*, c.name, u.pseudo, c.image as imagecategory 
+            fROM  category_service c, service s, user u   
+            WHERE 
+                c.id_category_service = s.id_category_service 
+                AND s.id_provider = u.id_user 
+                {$requett}
+        ");
 
        
 
