@@ -72,15 +72,9 @@ $app->get('/services/:id', function($service_id)  {
     $result = $db->getService($service_id);
 
     if ($result != NULL) {
-        $response["error"] = 0;
-        $response["id"] = $result["id_service"];
-        $response["titre"] = $result["titre"];
-        $response["price"] = $result["price"];
-        $response["image"] = $result["image"];
-        $response["description"] = $result["description"];
-        $response["active"] = $result["active"];
+        $result["error"] = 0;
         
-        echoRespnse(200, $response);
+        echoRespnse(200, $result);
     } else {
         $response["error"] = 1;
         $response["message"] = "The requested resource doesn't exists";
