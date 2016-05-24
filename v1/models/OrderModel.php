@@ -76,6 +76,46 @@ class OrderModel  extends DbHandler
             return NULL;
         }
     }
+
+    /**
+     * Fetching single order
+     * @param String $order_id id of the order
+     */
+    public function validateOrderCode($id_user, $order_id) {
+        $stmt = $this->conn->prepare("SELECT 
+                    `order`.*
+                    ,u.pseudo AS client_pseudo
+                    ,u.first_name AS client_first_name
+                    ,u.last_name AS client_last_name
+                    ,u.phone AS client_phone
+                    ,u.email AS client_email
+                    ,s.*
+                    ,p.pseudo AS provider_pseudo
+                    ,p.first_name AS provider_first_name
+                    ,p.last_name AS provider_last_name
+                    ,p.phone AS provider_phone
+                    ,p.email AS provider_email
+                FROM `order`
+                    LEFT JOIN user u  ON 
+                        u.id_user = `order`.id_user
+                    LEFT JOIN service s  ON 
+                        s.id_service = `order`.id_service
+                    LEFT JOIN user p  ON 
+                        p.id_user = s.id_provider
+                    
+                
+             WHERE `order`.id_order = ?
+                AND s.id_provider = ?
+        ");
+        $stmt->bind_param("ii", $order_id, $id_user);
+        if ($stmt->execute()) {
+            $order = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $order;
+        } else {
+            return NULL;
+        }
+    }
  
     /**
      * Fetching all user orders
@@ -110,6 +150,25 @@ class OrderModel  extends DbHandler
     }
  
     /**
+     * Updating order
+     * @param String $order_id id of the order
+     * @param String $order order text
+     * @param String $status order status
+     */
+    public function setOrderValidated($id_order) {
+        $stmt = $this->conn->prepare("UPDATE 
+            `order` t
+                set t.code_valided = 1
+            WHERE t.id_order = ? 
+        ");
+        $stmt->bind_param("i", $id_order);
+        $stmt->execute();
+        $num_affected_rows = $stmt->affected_rows;
+        $stmt->close();
+        return $num_affected_rows > 0;
+    }
+
+     /**
      * Updating order
      * @param String $order_id id of the order
      * @param String $order order text

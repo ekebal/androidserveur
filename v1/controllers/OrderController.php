@@ -92,6 +92,56 @@ $app->post('/orders', 'authenticate', function() use ($app) {
     echoRespnse(200, $response);
 }); 
 
+$app->post('/order_validate_code', 'authenticate', function() use ($app) {
+    // check for required params
+    verifyRequiredParams(array('code'));
+
+    $response = array();
+    $code = $app->request->post('code');
+    $payment_code = "";//DB -> AutoCreation
+    global $user_id;
+    
+    $db = new OrderModel();
+
+    // creating new order
+    $order = $db->validateOrderCode($user_id, $code);
+    if ($order != NULL ) {
+        //var_dump($order); die();
+        if($order['code_valided'] != 1){
+            $userModel = new UserModel();
+            $messageModel = new MessageModel();
+            $user = $userModel->getUserById($user_id);
+            $order = $db->getOrder($order['id_order']);
+            $result_update = $db->setOrderValidated($order['id_order']);
+            $order['code_valided'] = 1;
+            $text = " Le code ({$order['code']}). a été valide!. ";
+            $NotModel = new NotificationModel();
+            $titre = "Code Validé du service {$order['titre']}!";
+            $message = " -> " . substr($text, 0, 100) . " - ";
+            $activity = "Orders";
+            $activity_data = "";
+            $result = $messageModel->createMessage($text, $user_id, $order['id_provider']);
+            $notification_id = $NotModel->createNotification($user_id, $titre, $activity, $activity_data, $message);
+
+
+            $response = $order;
+            $response["error"] = 0;
+            $response["message"] = "Order created successfully";
+            $response["order_id"] = $order['id_order'];
+        }
+        else {
+            $response["error"] = 1;
+            $response["message"] = "Le code {$code} il est déjà validé.";
+        }
+    }
+    else{
+        $response["error"] = 1;
+        $response["message"] = "Le code {$code} n'existe pas.";
+    }
+
+    echoRespnse(200, $response);
+}); 
+
 /**
  * Updating existing order
  * method PUT
