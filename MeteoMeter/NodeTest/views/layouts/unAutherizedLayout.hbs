@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>Mobioos App</title>
+        <link rel="stylesheet" type="text/css" href="/lib/bootstrap-4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/theme/global.css">
+        <link rel="stylesheet" type="text/css" href="/theme/theme-light.css">
+        <link rel="stylesheet" type="text/css" href="/theme/themify-icons.css">
+    </head>
+    <body class="un-autherized-layout">
+       <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img class="light-theme-logo" src="../assets/images/mobioos-logo-black.svg" alt="">
+            <img class="dark-theme-logo" src="../assets/images/mobioos-logo-white.svg" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/home/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/home/contacts">Contacts</a>
+              </li>
+            </ul>
+            <div class="navbar-nav pull-right">
+              <a class="nav-link" href="/account/register">Register</a>
+              <a class="btn btn-primary" href="/account/login">Login</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+        {{{body}}}
+        {{> footer}}
+      <script type="text/javascript" src="/lib/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,5 @@
+27 Jun 2018 16:44:37,143 INFO  17f71e26-f67d-4c04-927a-4811d5413df2 - running default runtime strategy for session: 17f71e26-f67d-4c04-927a-4811d5413df2
+27 Jun 2018 16:44:37,144 INFO  17f71e26-f67d-4c04-927a-4811d5413df2 - running manifest activity for session: 17f71e26-f67d-4c04-927a-4811d5413df2
+27 Jun 2018 16:45:17,000 INFO  17f71e26-f67d-4c04-927a-4811d5413df2 - running default runtime strategy for session: aa4df622-d6c4-4eaa-9455-9403b6366239
+27 Jun 2018 16:47:05,413 INFO  17f71e26-f67d-4c04-927a-4811d5413df2 - running default runtime strategy for session: 1110365a-c6fb-461d-8d09-1f2b35deed8f
+27 Jun 2018 16:47:05,798 INFO  17f71e26-f67d-4c04-927a-4811d5413df2 - Preparing source package for session : 1110365a-c6fb-461d-8d09-1f2b35deed8f

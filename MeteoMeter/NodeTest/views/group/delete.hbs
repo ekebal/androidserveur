@@ -1,0 +1,68 @@
+
+<div class="container-fluid form-horizontal">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+
+        <h4>Group - Delete Form</h4>
+         </div>
+            <div class="card-body">
+        <h3>Are you sure you want to delete this?</h3>
+                   
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameId</label>
+                    <div class="col-sm-10 label-detail">
+                        {{id}}
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameName</label>
+                    <div class="col-sm-10 label-detail">
+                        {{name}}
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameGroup Department</label>
+                    <div class="col-sm-10 label-detail">
+                        {{groupDepartment}}
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameCity</label>
+                    <div class="col-sm-10 label-detail">
+                        {{city}}
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameCreation Date</label>
+                    <div class="col-sm-10 label-detail">
+                        {{creationDate}}
+                    </div>
+                 </div>
+                
+                <div class="row">
+                    <label for="firstname" class = "col-sm-2 col-form-label">UsernameCountry</label>
+                    <div class="col-sm-10 label-detail">
+                        {{country}}
+                    </div>
+                 </div>
+                
+            <div class="row form-action">
+            <div class="col-sm-10">
+                <form action="/group/delete/{{_id}}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                </div>
+                <!--<a href="/group/index">Back to List</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
