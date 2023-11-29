@@ -1,0 +1,63 @@
+
+<div class="container-fluid form-horizontal">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+            <h4>Group - Details Form</h4>
+      </div>
+      <div class="card-body">
+    
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">Id</label>
+            <div class="col-sm-10 label-detail">
+              {{id}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10 label-detail">
+              {{name}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">Group Department</label>
+            <div class="col-sm-10 label-detail">
+              {{groupDepartment}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">City</label>
+            <div class="col-sm-10 label-detail">
+              {{city}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">Creation Date</label>
+            <div class="col-sm-10 label-detail">
+              {{creationDate}}
+            </div>
+        </div>
+        
+        <div class="row">
+            <label for="firstname" class = "col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10 label-detail">
+              {{country}}
+            </div>
+        </div>
+        
+<div class="row form-action">
+    <div class="col-sm-10">
+    <!-- <a href="/group/index">Back to List</a>-->
+    <a class="btn btn-primary btn-sm" href="/group/edit/{{_id}}">Edit</a>
+    </div>
+</div>
+</div>
+    </div>
+  </div>
+</div>
+

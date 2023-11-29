@@ -1,0 +1,76 @@
+<div class="container-fluid form-horizontal">
+ <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+        <h4>
+          Group - List Form</h4>
+        <a class="btn btn-primary btn-sm float-right" href="/group/create">Create New</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                                  <th>
+                    Id
+                  </th>
+                                    <th>
+                    Name
+                  </th>
+                                    <th>
+                    Group Department
+                  </th>
+                                    <th>
+                    City
+                  </th>
+                                    <th>
+                    Creation Date
+                  </th>
+                                    <th>
+                    Country
+                  </th>
+                                      <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each entities}}
+              <tr>
+                                  <td>
+                                          {{_
+                      id}}
+                                          </td>
+                                    <td>
+                                              {{
+                          name}}
+                                              </td>
+                                    <td>
+                                              {{
+                          groupDepartment}}
+                                              </td>
+                                    <td>
+                                              {{
+                          city}}
+                                              </td>
+                                    <td>
+                                              {{
+                          creationDate}}
+                                              </td>
+                                    <td>
+                                              {{
+                          country}}
+                                              </td>
+                                      <td>
+                      <a class="btn btn-info btn-sm" href="/group/details/{{_id}}">Details</a>
+                      <a class="btn btn-warning btn-sm" href="/group/edit/{{_id}}">Edit</a>
+                      <a class="btn btn-danger btn-sm" href="/group/delete/{{_id}}">Delete</a>
+                    </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>

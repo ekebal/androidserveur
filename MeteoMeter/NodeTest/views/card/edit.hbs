@@ -1,0 +1,46 @@
+
+<div class="container-fluid form-horizontal">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+    <h4>Card - Edit Form</h4>
+          </div>
+      <div class="card-body">
+    <form action="/card/edit/{{_id}}" method="post">
+    
+    
+    <div class="form-group row">
+        <label for="publicationDate" class ="col-sm-2 col-form-label">Publication Date</label>
+        <div class="col-sm-10">
+            <input type="text" id="publicationDate" name="publicationDate" class="form-control" value="{{publicationDate}}">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="content" class ="col-sm-2 col-form-label">Content</label>
+        <div class="col-sm-10">
+            <input type="text" id="content" name="content" class="form-control" value="{{content}}">
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label for="type" class ="col-sm-2 col-form-label">Type</label>
+        <div class="col-sm-10">
+            <input type="text" id="type" name="type" class="form-control" value="{{type}}">
+        </div>
+    </div>
+    
+
+    <div class="form-group row form-action">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+  </div>
+</div>
+<!-- <div>
+    <a href="/card/index">Back to List</a>
+</div> -->

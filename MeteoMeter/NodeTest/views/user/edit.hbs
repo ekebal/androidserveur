@@ -1,0 +1,37 @@
+<div class="container-fluid form-horizontal">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+        <h4>Edit User</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" action="/user/edit/{{_id}}">
+          <div class="form-group row">
+              <label for="username" class = "col-sm-2 col-form-label">Username:</label>
+              <div class="col-sm-10">
+                <input id="username" class="form-control" name="username" required value={{username}}>
+              </div>
+          </div>
+           <div class="form-group row">
+               <label for="firstName" class = "col-sm-2 col-form-label">Firstname:</label>
+               <div class="col-sm-10">
+                 <input id="firstName" class="form-control" name="firstName" required value={{firstName}}>
+               </div>
+           </div>
+           <div class="form-group row">
+               <label for="lastName" class = "col-sm-2 col-form-label">Lastname:</label>
+               <div class="col-sm-10">
+                 <input id="lastName" class="form-control" name="lastName" required value={{lastName}}>
+               </div>
+           </div>
+           <div class="form-group row form-action">
+             <div class="col-sm-10">
+               <button name="submit" type="submit" class="btn btn-primary btn-sm">Update</button>
+             </div>
+           </div>
+       </form>
+      </div>
+    </div>
+  </div>
+</div>
+

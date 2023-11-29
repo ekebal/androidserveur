@@ -1,0 +1,83 @@
+<div class="container-fluid form-horizontal">
+ <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+        <h4>
+          Reporting - List Form</h4>
+        <a class="btn btn-primary btn-sm float-right" href="/reporting/create">Create New</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                                  <th>
+                    Id
+                  </th>
+                                    <th>
+                    Publication Date
+                  </th>
+                                    <th>
+                    Content
+                  </th>
+                                    <th>
+                    Type
+                  </th>
+                                    <th>
+                    Results
+                  </th>
+                                    <th>
+                    Views
+                  </th>
+                                    <th>
+                    Id Card
+                  </th>
+                                      <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each entities}}
+              <tr>
+                                  <td>
+                                          {{_
+                      id}}
+                                          </td>
+                                    <td>
+                                              {{
+                          publicationDate}}
+                                              </td>
+                                    <td>
+                                              {{
+                          content}}
+                                              </td>
+                                    <td>
+                                              {{
+                          type}}
+                                              </td>
+                                    <td>
+                                              {{
+                          results}}
+                                              </td>
+                                    <td>
+                                              {{
+                          views}}
+                                              </td>
+                                    <td>
+                                              {{
+                          idCard}}
+                                              </td>
+                                      <td>
+                      <a class="btn btn-info btn-sm" href="/reporting/details/{{_id}}">Details</a>
+                      <a class="btn btn-warning btn-sm" href="/reporting/edit/{{_id}}">Edit</a>
+                      <a class="btn btn-danger btn-sm" href="/reporting/delete/{{_id}}">Delete</a>
+                    </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>

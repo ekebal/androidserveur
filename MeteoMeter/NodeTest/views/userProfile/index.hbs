@@ -1,0 +1,76 @@
+<div class="container-fluid form-horizontal">
+ <div class="col-lg-12">
+    <div class="card">
+      <div class="card-title">
+        <h4>
+          UserProfile - List Form</h4>
+        <a class="btn btn-primary btn-sm float-right" href="/userprofile/create">Create New</a>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                                  <th>
+                    Id
+                  </th>
+                                    <th>
+                    User Id
+                  </th>
+                                    <th>
+                    Job
+                  </th>
+                                    <th>
+                    Department
+                  </th>
+                                    <th>
+                    City
+                  </th>
+                                    <th>
+                    Country
+                  </th>
+                                      <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each entities}}
+              <tr>
+                                  <td>
+                                          {{_
+                      id}}
+                                          </td>
+                                    <td>
+                                              {{
+                          userId}}
+                                              </td>
+                                    <td>
+                                              {{
+                          job}}
+                                              </td>
+                                    <td>
+                                              {{
+                          department}}
+                                              </td>
+                                    <td>
+                                              {{
+                          city}}
+                                              </td>
+                                    <td>
+                                              {{
+                          country}}
+                                              </td>
+                                      <td>
+                      <a class="btn btn-info btn-sm" href="/userprofile/details/{{_id}}">Details</a>
+                      <a class="btn btn-warning btn-sm" href="/userprofile/edit/{{_id}}">Edit</a>
+                      <a class="btn btn-danger btn-sm" href="/userprofile/delete/{{_id}}">Delete</a>
+                    </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>
